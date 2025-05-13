@@ -1,0 +1,359 @@
+EMP ID :46195784 
+NAME   :AKALABUR
+TOPIC  :SQL
+
+
+LAB 2 : SINGLE ROW FUNCTIONS
+
+-------------------------------------------------------------------------------------------------------------
+2.1 SINGLE ROW FUNCTIONS
+-------------------------------------------------------------------------------------------------------------
+
+Q 1. Display name and date of birth of students where date of birth must be displayed in the format similar to “January, 12 1981” for those who were born on Saturday or Sunday.
+
+QUERY:
+
+SQL> select student_name,TO_CHAR(student_dob,'MONTH-DD-YYYY') AS STUDENT_DOB 
+	FROM student_masters
+	WHERE TO_CHAR(student_dob,'DAY') LIKE  ('%SATURDAY%') 
+	OR TO_CHAR(student_dob,'DAY') LIKE  ('%SUNDAY%') ;
+
+OUTPUT:
+
+STUDENT_NAME	STUDENT_DOB
+Ravi		NOVEMBER -01-1981
+Raj		JANUARY -14-1979
+Arvind		JANUARY -15-1983
+Mehul		JANUARY -17-1982
+Vijay		JANUARY -19-1980
+Rajat		JANUARY -20-1980
+Ramesh		DECEMBER -27-1980
+Amit Raj		SEPTEMBER-28-1980
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 2. Display each staff name and number of months they worked for the organization. Label the column as ‘Months Worked’. Order your result by number of months employed. Round the number of months to closest whole number.
+
+QUERY:
+
+SQL> SELECT staff_name,round(months_between(sysdate,hiredate)) as "months worked"
+	FROM staff_masters
+	ORDER BY "months worked";
+
+OUTPUT:
+
+STAFF_NAME	Months Worked
+Rahul		213
+Arvind		224
+Raviraj		224
+Smith		234
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 3. List the details of the employees, whose names start with ‘A’ and end with ‘S’. 
+
+QUERY:
+
+SQL> SELECT *
+	FROM emp
+	WHERE ENAME LIKE 'A%S';
+
+OUTPUT:
+
+EMPNO	ENAME	JOB	MGR	HIREDATE	SAL	COMM	DEPTNO
+7876	ADAMS	CLERK	7788	12-JAN-83	1100	-	20
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 4. List the name and job of the employees whose names should contain N as the second or third character, and ending with either ‘N’ or ‘S’. 
+
+QUERY:
+
+SQL> SELECT ename,job
+	FROM emp
+	WHERE (ename LIKE '__N%' OR ename LIKE '_N%')
+	 AND (ename LIKE '%N' OR ename LIKE '%S'); 
+
+OUTPUT:
+
+ENAME	JOB
+JONES	MANAGER
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 5. Create a query which will display Staff Name, Salary of each staff. Format the salary to be 15 character long and left padded with ‘$’. 
+
+QUERY:
+
+SQL> SELECT staff_name,LPAD(staff_sal,15,'$') AS salary
+	FROM staff_masters;
+
+OUTPUT:
+
+STAFF_NAME	SALARY
+Arvind		$$$$$$$$$$17000
+Shyam		$$$$$$$$$$20000
+Mohan		$$$$$$$$$$24000
+Anil		$$$$$$$$$$20000
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 6. List the names of the Employees having ‘_’ character in their name. 
+
+QUERY:
+
+SQL> SELECT ename
+	FROM emp
+	WHERE ename LIKE '%_%';
+
+OUTPUT:
+
+ENAME
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 7. List the details of the employees who have joined in December (irrespective of the year). 
+
+QUERY:
+
+SQL> SELECT *
+	FROM emp
+	WHERE TO_CHAR(hiredate,'MONTH') LIKE '%DECEMBER%';
+
+OUTPUT:
+
+EMPNO	ENAME	JOB	MGR	HIREDATE	SAL	COMM	DEPTNO
+7369	SMITH	CLERK	7902	17-DEC-80	800	-	20
+7788	SCOTT	ANALYST	7566	09-DEC-82	3000	-	20
+7900	JAMES	CLERK	7698	03-DEC-81	950	-	30
+7902	FORD	ANALYST	7566	03-DEC-81	3000	-	20
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 8. Write a query that displays Staff Name, Salary, and Grade of all staff. Grade depends on the following table. 
+
+Salary			Grade
+Salary >=50000		A
+Salary >= 25000 < 50000	B
+Salary>=10000 < 25000	C
+OTHERS			D
+
+QUERY:
+
+SQL> SELECT staff_name,staff_sal,
+	CASE
+	WHEN staff_sal >=50000 THEN 'A'  
+	WHEN staff_sal  >25000 AND  staff_sal<50000 THEN 'B' 
+	WHEN staff_sal  >10000 AND  staff_sal<25000 THEN 'C' 
+	ELSE 'D' 
+	END CASE
+	FROM staff_masters;
+
+OUTPUT:
+
+STAFF_NAME	STAFF_SAL	CASE
+Arvind		17000		C
+Shyam		20000		C
+Mohan		24000		C
+Anil		20000		C
+John		32000		B
+Allen		42000		B
+Smith		62000		A
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 9. Display the Staff Name, Hire date and day of the week on which staff was hired. Label the column as DAY. Order the result by the day of the week starting with Monday.
+
+QUERY:
+
+SQL> SELECT staff_name,TO_CHAR(hiredate,'DAY')AS DAY 
+	FROM staff_masters 
+	ORDER BY TO_CHAR(hiredate,'DAY') ;
+
+OUTPUT:
+
+STAFF_NAME	DAY
+Allen		MONDAY
+Raviraj		SATURDAY
+Mohan		SATURDAY
+Anil		SUNDAY
+Shyam		SUNDAY
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 10. Show staff names with the respective numbers of asterisk from Staff table. 
+
+QUERY:
+
+SQL> select first_name,RPAD('*',LENGTH(first_name),'*') AS name 
+	from employees;
+
+
+OUTPUT:
+
+FIRST_NAME           NAME
+Ellen               	 *****
+Sundar              	 ******
+Mozhe              	 *****
+David               	 *****
+-------------------------------------------------------------------------------------------------------------
+
+Q 11. Show staff names with the respective numbers of asterisk from Staff table except first and last characters. For example: KING will be replaced with K**G. 
+
+QUERY:
+
+SQL> SUBSTR(FIRST_NAME,0,1)||RPAD('*',LENGTH(FIRST_NAME)-2,'*')||SUBSTR(FIRST_NAME,-1);
+
+OUTPUT:
+S****h
+L*****y
+W*****m
+S*****n
+M****a
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 12. . Show all staffs who were hired in the first half of the month. 
+
+QUERY:
+
+SQL> SELECT *
+	FROM staff_masters
+	WHERE TO_CHAR(hiredate,'DD') BETWEEN 1 AND 15;
+
+OUTPUT:
+
+STAFF_CODE	STAFF_NAME	DESIGN_CODE	DEPT_CODE	STAFF_DOB	HIREDATE	MGR_CODE	STAFF_SAL	STAFF_ADDRESS
+100001		Arvind		102		30		15-JAN-80	15-JAN-03	100006		17000		Bangalore
+100004		Anil		102		20		22-APR-77	11-MAR-01	100006		20000		Hyderabad
+100007		Smith		103		20		19-JUL-73		12-MAR-02	100005		62000		Mumbai
+100008		Raviraj		102		40		17-JUN-80	11-JAN-03	100006		18000		Bangalore
+100009		Rahul		102		20		16-JAN-78	11-DEC-03	100006		22000		Hyderabad
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 13. Display the staff name, hire date and day of the week on which the staff joined. Order the results by the day of the week starting with Monday. 
+
+QUERY:
+
+SQL> SELECT first_name,last_name,hire_date, 
+	TO_CHAR(HIRE_DATE,'Day') AS joined_day 
+	from employees 
+	order by to_char(hire_date-1,'d');
+
+OUTPUT:
+
+FIRST_NAME           LAST_NAME	HIRE_DATE 	JOINED_DA
+Renske              	Ladwig                    	14-JUL-03 	Monday
+Gerald              	Cambrault                 	15-OCT-07 	Monday
+Jason                	Mallin                    	14-JUN-04 	Monday
+Bruce              	Ernst                     	21-MAY-07 	Monday
+Danielle             	Greene                   	 19-MAR-07	 Monday
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 14. . Write a query to find the position of third occurrence of ‘i’ in the given word ‘Mississippi’. 
+
+QUERY:
+
+SQL> select INSTR('mississippi','i',2,3) 
+	from dual;
+
+OUPUT:
+
+INSTR('MISSISSIPPI','I',2,3)
+8
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 15. Write a query to find the pay date for the month. Pay date is the last Friday of the month. Display the date in the format “Twenty Eighth of January, 2002”. Label the heading as PAY DATE.
+
+QUERY:
+
+SQL> SELECT TO_CHAR(NEXT_DAY(SYSDATE,'FRIDAY'),'"Today is" DDSP,"of" MONTH ,YYYY') AS DAY FROM DUAL WHERE NEXT_DAY(SYSDATE,'TUESDAY')<LAST_DAY(SYSDATE) ;
+
+OUTPUT:
+
+DAY
+Today is ONE,of OCTOBER   ,2021
+
+-------------------------------------------------------------------------------------------------------------
+
+2.2 GROUP FUNCTIONS
+-------------------------------------------------------------------------------------------------------------
+
+Q 16. Display the Highest, Lowest, Total & Average salary of all staff. Label the columns Maximum, Minimum, Total and Average respectively. Round the result to nearest whole number.
+
+QUERY:
+
+SQL> select first_name,salary,max(salary) as heighest,min(salary) as minimum, round(avg(salary)) as average,round(sum(salary)) as total from employees group by first_name,salary;
+
+OUTPUT:
+
+FIRST_NAME	SALARY 	  HEIGHEST   	 MINIMUM    	AVERAGE      TOTAL
+Luis                       	6900       	   6900       	6900       		6900     	  6900
+Den                       	11000     	   11000     		 11000    		  11000    	  11000
+Laura                     	 3300      	    3300      	 3300      		 3300       	   3300
+-------------------------------------------------------------------------------------------------------------
+
+Q 17. Edit the above query and display the same for each Department Name.
+
+QUERY:
+
+SQL> select department_id,max(salary) as heighest,min(salary) as minimum, round(avg(salary)) as average,round(sum(salary)) as total from employees group by department_id;
+
+OUTPUT:
+
+DEPARTMENT_ID   HEIGHEST    MINIMUM    AVERAGE      TOTAL
+          100      12008       6900       8601      51608
+           30      11000       2500       4150      24900
+           90      24000      17000      19333      58000
+-------------------------------------------------------------------------------------------------------------
+
+Q 18. Write a query to display number of people in each Department. Output should display Department Code, Department Name and Number of People.
+
+QUERY:
+
+SQL>  select department_id,dname,count(*) as num_of_prople from employees,dept group by department_id,dname;
+
+OUTPUT:
+
+DEPARTMENT_ID DNAME          NUM_OF_PROPLE
+              ACCOUNTING                 1
+           10 ACCOUNTING               1
+          100 RESEARCH                    6
+          100 SALES                            6
+-------------------------------------------------------------------------------------------------------------
+
+Q 19. Determine the number of managers without listing them. Label the column as ‘Total Number of Managers’.
+
+QUERY:
+
+SQL> select count(manager_id) as total_number_of_managers from employees;
+
+OUTPUT:
+
+TOTAL_NUMBER_OF_MANAGERS
+                     106
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 20. Display Manager Code, Manager Name and salary of lowest paid staff in that manager’s team. Exclude any group where minimum salary is less than 10000. Order the result on descending order of salary.
+
+QUERY:
+
+SQL> SELECT manager_id, MIN(salary),first_name as manager_name FROM employees WHERE manager_id IS NOT NULL HAVING min(salary)>10000  GROUP BY manager_id,first_name  order by min(salary) DESC;
+
+OUTPUT:
+
+MANAGER_ID 	MIN(SALARY) 	MANAGER_NAME
+       100       	17000 		Lex
+       100      	 17000 		Neena
+       100     	 14000 		John
+       100       	13500 		Karen
+       100       	13000 		Michael

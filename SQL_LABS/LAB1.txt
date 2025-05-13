@@ -1,0 +1,328 @@
+EMP ID :46195784 
+NAME   :AKALABUR
+TOPIC  :SQL
+
+
+LAB 1. DATA QUERY LANGUAGE
+
+
+Q 1. Retrieve the details (Name, Salary and dept code) of the employees who are working in department 20, 30 and 40. 
+
+QUERY:
+
+SQL> select FIRST_NAME, SALARY, DEPARTMENT_ID 
+	from EMPLOYEES
+	where DEPARTMENT_ID IN (20,30,40);
+
+OUTPUT:
+
+FIRST_NAME	SALARY		DEPARTMENT_ID
+Michael		13000		20
+Pat		6000		20
+Den		11000		30
+Alexander		3100		30
+Shelli		2900		30
+Sigal		2800		30
+Guy		2600		30
+Karen		2500		30
+Susan		6500		40
+
+-----------------------------------------------------------------------------------------------------
+
+Q 2. List the details of the employees with user defined Column headers.
+
+QUERY:
+
+SQL> select employee_id AS EMP_ID, 
+	first_name AS Name, last_name AS Surname, 
+	email AS EMAIL_ID, phone_number AS Contact,
+	hire_date AS DOJ, job_id AS JOB_Role,
+	salary AS CTC, commission_pct AS Comm, 
+	manager_id AS Reporting_To, department_id AS Department_Code
+ 	from employees;
+
+OUTPUT:
+
+EMP_ID	NAME	SURNAME	EMAIL_ID	CONTACT	DOJ	                JOB_ROLE	          	CTC          COMM	REPORTING_TO	DEPARTMENT_CODE
+100	Steven	King		SKING		515.123.4567	17-JUN-87	AD_PRES		24000	-	-		90
+101	Neena	Kochhar		NKOCHHAR	515.123.4568	21-SEP-89		AD_VP		17000	-	100		90
+102	Lex	De Haan		LDEHAAN	515.123.4569	13-JAN-93	AD_VP		17000	-	100		90
+103	Alexander	Hunold		AHUNOLD	590.423.4567	03-JAN-90	IT_PROG		9000	-	102		60
+104	Bruce	Ernst		BERNST		590.423.4568	21-MAY-91	IT_PROG		6000	-	103		60
+105	David	Austin		DAUSTIN		590.423.4569	25-JUN-97	IT_PROG		4800	-	103		60
+106	Valli	Pataballa		VPATABAL	590.423.4560	05-FEB-98	IT_PROG		4800	-	103		60
+107	Diana	Lorentz		DLORENTZ	590.423.5567	07-FEB-99	IT_PROG		4200	-	103		60
+108	Nancy	Greenberg		NGREENBE	515.124.4569	17-AUG-94	FI_MGR		12000	-	101		100
+109	Daniel	Faviet		DFAVIET		515.124.4169	16-AUG-94	FI_ACCOUNT	9000	-	108		100
+
+---------------------------------------------------------------------------------------------------------
+
+Q 3. Display the code, subjects and total marks for every student. Total Marks will be     calculated as Subject1+Subject2+Subject3. (Refer Student_Marks table)
+
+QUERY:
+
+SQL> select student_code AS CODE,
+	subject1, subject2, subject3,
+	(subject1+subject2+subject3) AS Total_Marks
+	from student_marks;
+
+OUTPUT:
+
+CODE	SUBJECT1	SUBJECT2	SUBJECT3	TOTAL_MARKS
+1020	45		55		65		165
+1021	78		79		78		235
+1001	68		44		92		204
+1002	89		96		78		263
+1003	78		56		55		189
+1004	75		58		65		198
+1005	73		74		65		212
+1006	66		45		74		185
+1007	68		78		74		220
+1008	69		44		52		165
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 4. List the details of the staff whose designations are either PROFESSOR or LECTURER.
+
+QUERY:
+
+SQL> select * from staff_masters 
+	where design_code IN(105,102);
+
+OUTPUT:
+
+STAFF_CODE	STAFF_NAME	DESIGN_CODE	DEPT_CODE	STAFF_DOB	HIREDATE	MGR_CODE	STAFF_SAL	STAFF_ADDRESS
+100001		Arvind		102		30		15-JAN-80	15-JAN-03	100006		17000		Bangalore
+100002		Shyam		102		20		18-FEB-80	17-FEB-02	100007		20000		Chennai
+100003		Mohan		102		10		23-MAR-80	19-JAN-02	100006		24000		Mumbai
+100004		Anil		102		20		22-APR-77	11-MAR-01	100006		20000		Hyderabad
+100008		Raviraj		102		40		17-JUN-80	11-JAN-03	100006		18000		Bangalore
+100009		Rahul		102		20		16-JAN-78	11-DEC-03	100006		22000		Hyderabad
+
+-------------------------------------------------------------------------------------------------------
+
+Q 5. List the code, name, and department number of the employees who have experience of more than 18 years. 
+
+QUERY:
+
+SQL> select employee_id, first_name, department_id, 
+	(sysdate-hire_date)/365 AS Experience
+	from employees
+	where ((sysdate-hire_date)/12)>18;
+
+OUTPUT:
+
+EMPLOYEE_ID	FIRST_NAME	DEPARTMENT_ID	EXPERIENCE
+100		Steven		90		34.2928767123287671232876712328767123288
+101		Neena		90		32.0271232876712328767123287671232876712
+102		Lex		90		28.7120547945205479452054794520547945206
+103		Alexander		60		31.7421917808219178082191780821917808219
+104		Bruce		60		30.3641095890410958904109589041095890411
+
+--------------------------------------------------------------------------------------------------------------
+
+Q 6. List the name and Designations of the staff who have joined before Jan 2003.
+
+QUERY:
+
+SQL> select e.first_name, d.department_name 
+	from employees e, departments d
+	where e.department_id=d.department_id 
+	and e.hire_date<('01-Jan-2003');
+
+OUTPUT:
+
+FIRST_NAME	DEPARTMENT_NAME
+Steven		Executive
+Neena		Executive
+Lex		Executive
+Alexander		IT
+Bruce		IT
+David		IT
+
+-------------------------------------------------------------------------------------------------------
+
+Q 7. List the name, designation, and income for 10 years of the employees who are working in departments 10 and 30. 
+
+QUERY:
+
+SQL> SELECT first_name,job_id,salary*12*10 AS income
+	FROM employees
+	where department_id IN (10,30);
+
+OUTPUT:
+
+FIRST_NAME	JOB_ID		INCOME
+Jennifer		AD_ASST		528000
+Den		PU_MAN		1320000
+Alexander		PU_CLERK	372000
+Shelli		PU_CLERK	348000
+Sigal		PU_CLERK	336000
+Guy		PU_CLERK	312000
+Karen		PU_CLERK	300000
+
+-------------------------------------------------------------------------------------------------------
+
+Q 8. List the name and experience (in years) of employees who are working as LECTURER. 
+
+QUERY:
+
+SQL> select s.staff_name, (sysdate-hiredate)/365 AS Experience
+	from staff_masters s, designation_masters d
+	where d.design_name='Lecturer';
+
+OUTPUT:
+
+STAFF_NAME	EXPERIENCE
+Arvind		18.7028281012176560121765601217656012177
+Shyam		19.6124171423135464231354642313546423136
+Mohan		19.6918691971080669710806697108066971081
+Anil		20.5521431697108066971080669710806697108
+
+-----------------------------------------------------------------------------------------------------------
+
+Q 9. Display name concatenated with dept code separated by comma and space. Name the column as ‘Student Info’.
+
+QUERY:
+
+SQL> select CONCAT(CONCAT(student_name, ', '), dept_code) AS "Student_Info"
+	from student_masters;
+
+OUTPUT:
+
+Student_Info
+Amit, 10
+Ravi, 10
+Ajay, 20
+Raj, 30
+Arvind, 40
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 10. List the Name and Salary of the staff who are earning between 12000 and 25000. Sort them based on their salaries and name. 
+
+QUERY:
+
+SQL> select staff_name, staff_sal from staff_masters
+	where staff_sal>12000 and staff_sal<25000
+	ORDER BY staff_name DESC, staff_sal ASC;
+
+OUTPUT:
+
+STAFF_NAME	STAFF_SAL
+Shyam		20000
+Raviraj		18000
+Rahul		22000
+Mohan		24000
+Arvind		17000
+Anil		20000
+
+------------------------------------------------------------------------------------------------------------
+
+Q 11. Display employees who do not have manager. 
+
+QUERY:
+
+SQL> select * from employees
+	where manager_id is NULL;
+
+OUTPUT:
+
+EMPLOYEE_ID	FIRST_NAME	LAST_NAME	EMAIL	PHONE_NUMBER	HIRE_DATE	JOB_ID		SALARY	COMMISSION_PCT	MANAGER_ID	DEPARTMENT_ID
+100		Steven		King		SKING	515.123.4567	17-JUN-87	AD_PRES		24000	-		-			90
+
+-------------------------------------------------------------------------------------------------------------
+
+Q 12. Write a query which will display name, department code and date of birth of all
+students who were born between January 1, 1981 and March 31, 1983. Sort it based on date
+of birth (ascending).
+
+QUERY:
+
+SQL> select student_name, dept_code, student_dob 
+	from student_masters
+	where student_dob BETWEEN '01-Jan-1981' and '31-Mar-1983'
+	order by student_dob asc;
+
+OUTPUT:
+
+STUDENT_NAME	DEPT_CODE	STUDENT_DOB
+Rahul		50		16-JAN-81
+Dev		10		11-MAR-81
+Kapil		40		18-MAR-81
+Ravi Raj		50		29-MAY-81
+Ravi		10		01-NOV-81
+Ajay		20		13-JAN-82
+Mehul		20		17-JAN-82
+Arvind		40		15-JAN-83
+
+---------------------------------------------------------------------------------------------------------
+
+Q 13. Get the Department number, and sum of Salary of all non managers where the sum is greater than 20000. 
+
+QUERY:
+
+SQL> SELECT Deptno,sum(sal) FROM EMP
+   	 WHERE JOB NOT IN('MANAGER')
+       	  GROUP BY DeptNo --HAVING sum(sal) > 20000
+ 	ORDER BY DeptNo;
+
+OUTPUT:
+
+DEPTNO	SUM(SAL)
+10	6300
+20	7900
+30	7800
+
+-----------------------------------------------------------------------------------------------------------
+
+Q 14. . Display the details of books that have not been returned and expected return date was last Monday.
+
+QUERY:
+
+SQL> select b1.book_code,book_name
+	from book_masters b1, book_transactions b2
+	where b1.book_code=b2.book_code AND
+	book_actual_return_date<>book_expected_return_date AND
+	book_expected_return_date=NEXT_DAY(sysdate, 'Mon');
+
+------------------------------------------------------------------------------------------------------------
+
+Q 15. Display the name and department code of students. If student does not belong to any department, display “No Department”. Label the column as “Department”. (Hint: Use NVL function)
+
+QUERY:
+
+SQL> select student_code, student_name, dept_name
+ 	from student_masters s, department_masters d
+	where s.dept_code=d.dept_code AND
+	dept_name IN(NVL2(dept_name,dept_name, 'No department'));
+
+OUTPUT:
+
+STUDENT_CODE	STUDENT_NAME	DEPT_NAME
+1001		Amit		Computer Science
+1002		Ravi		Computer Science
+1003		Ajay		Electricals
+1004		Raj		Electronics
+
+------------------------------------------------------------------------------------------------------------
+
+Q 16. Display the name and salary of the staff. Salary should be represented as X. Each X represents a 1000 in salary.
+Sample Output
+
+JOHN		10000		XXXXXXXXXX
+ALLEN		12000 		XXXXXXXXXXXX
+
+QUERY:
+
+SQL> select staff_name, staff_sal, rpad('X', FLOOR(staff_sal/1000), 'X') AS salary
+	from staff_masters
+	order by staff_sal;
+
+OUTPUT:
+
+STAFF_NAME	STAFF_SAL	SALARY
+Arvind		17000		XXXXXXXXXXXXXXXXX
+Raviraj		18000		XXXXXXXXXXXXXXXXXX
+Shyam		20000		XXXXXXXXXXXXXXXXXXXX
+Anil		20000		XXXXXXXXXXXXXXXXXXXX

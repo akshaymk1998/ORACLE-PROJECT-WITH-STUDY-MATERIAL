@@ -1,0 +1,91 @@
+EMP ID :46195784 
+NAME   :AKALABUR
+TOPIC  :SQL
+
+			LAB 1
+================================================
+
+1Q. 
+SQL> SELECT first_name, salary , department_id
+  2  From employees
+  3  WHERE department_id BETWEEN 20 and 40;
+
+FIRST_NAME               SALARY DEPARTMENT_ID
+-------------------- ---------- -------------
+Michael                   13000            20
+Pat                        6000            20
+Den                       11000            30
+
+2Q.
+ SELECT employee_id "EMP_ID" ,first_name "FNAME", last_name "LNAME", email "MAIL",
+  2  phone_number "PNO", hire_date "H_DATE", job_id "j_id", salary "SAL", commission_pct "COMM_P",
+  3  manager_id "MGR", department_id "DEPT_NO" FROM employees;
+
+    EMP_ID FNAME                LNAME                     MAIL                      PNO                  H_DATE    j_id              SAL     COMM_P        MGR    DEPT_NO
+---------- -------------------- ------------------------- ------------------------- -------------------- --------- ---------- ---------- ---------- ---------- ----------
+       100 Steven               King                      SKING                     515.123.4567         17-JUN-03 AD_PRES         24000                               90
+       101 Neena                Kochhar                   NKOCHHAR                  515.123.4568         21-SEP-05 AD_VP           17000                   100         90
+
+
+3Q.
+
+
+SQL> SELECT student_code, subject1, subject2, subject3 , (subject1+subject2+subject3) "TOTAL"
+     FROM student_marks;
+
+STUDENT_CODE   SUBJECT1   SUBJECT2   SUBJECT3      TOTAL
+------------ ---------- ---------- ---------- ----------
+        1001         55         45         78        178
+        1002         66         74         88        228
+
+4Q.
+SQL> select * from staff_masters
+  2  where design_code IN(105,102);
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL
+---------- -------------------------------------------------- ----------- ---------- --------- --------- ---------- ----------
+STAFF_ADDRESS
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+    100001 Arvind                                                     102         30 15-JAN-80 15-JAN-03     100006      17000
+Bangalore
+
+    100002 Shyam                                                      102         20 18-FEB-80 17-FEB-02     100007      20000
+Chennai
+
+    100003 Mohan                                                      102         10 23-MAR-80 19-JAN-02     100006      24000
+Mumbai
+
+    100004 Anil                                                       102         20 22-APR-77 11-MAR-01     100006      20000
+Hyderabad
+
+    100008 Raviraj                                                    102         40 17-JUN-80 11-JAN-03     100006      18000
+Bangalore
+
+    100009 Rahul                                                      102         20 16-JAN-78 11-DEC-03     100006      22000
+Hyderabad
+
+
+6 rows selected.
+
+5Q.
+
+SQL> SELECT employee_id, first_name, department_id
+  2  , (sysdate-hire_date)/365 AS EXPERIENCE
+  3  from employees
+  4  WHERE ((sysdate-hire_date)/12)>18;
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_ID EXPERIENCE
+----------- -------------------- ------------- ----------
+        100 Steven                          90 18.7443496
+        101 Neena                           90 16.4785962
+        102 Lex                             90 21.1690071
+        103 Alexander                       60 16.1936647
+
+6Q.
+
+
+
+
+
+
+ 

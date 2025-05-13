@@ -1,0 +1,1466 @@
+======================================
+=	EMP ID :46195784             =
+======================================
+=	NAME   :AKALABUR             =
+======================================
+=	TOPIC  :SQL                  =
+======================================
+
+=========================================================================================================
+							lab1                                            =
+=========================================================================================================
+
+
+1.
+SQL> SELECT FIRST_NAME,SALARY,DEPARTMENT_ID from EMPLOYEES where DEPARTMENT_ID in (20,30,40);
+
+FIRST_NAME               SALARY DEPARTMENT_ID
+-------------------- ---------- -------------
+Michael                   13000            20
+Pat                        6000            20
+Den                       11000            30
+Alexander                  3100            30
+Shelli                     2900            30
+Sigal                      2800            30
+Guy                        2600            30
+Karen                      2500            30
+Susan                      6500            40
+
+
+2.
+ SELECT employee_id as empid, first_name as fname,last_name as lname,email as mail,phone_number as phone,
+ hire_date as hire,job_id as job,salary as sal,commission_pct as comm, manager_id as mid,department_id as did from employees;
+
+     EMPID FNAME                LNAME                     MAIL                      PHONE                HIRE      JOB
+                     SAL       COMM        MID        DID
+---------- -------------------- ------------------------- ------------------------- -------------------- --------- ---------- ---------- ---------- ---------- ----------
+       100 Steven               King                      SKING                     515.123.4567         17-JUN-03 AD_PRES         24000                               90
+       101 Neena                Kochhar                   NKOCHHAR                  515.123.4568         21-SEP-05 AD_VP           17000                   100         90
+       102 Lex                  De Haan                   LDEHAAN                   515.123.4569         13-JAN-01 AD_VP           17000                   100         90
+       103 Alexander            Hunold                    AHUNOLD                   590.423.4567         03-JAN-06 IT_PROG          9000                   102         60
+       104 Bruce                Ernst                     BERNST                    590.423.4568         21-MAY-07 IT_PROG          6000                   103         60
+       105 David                Austin                    DAUSTIN                   590.423.4569         25-JUN-05 IT_PROG          4800                   103         60
+       106 Valli                Pataballa                 VPATABAL                  590.423.4560         05-FEB-06 IT_PROG          4800                   103         60
+       107 Diana                Lorentz                   DLORENTZ                  590.423.5567         07-FEB-07 IT_PROG          4200                   103         60
+       108 Nancy                Greenberg                 NGREENBE                  515.124.4569         17-AUG-02 FI_MGR          12008                   101        100                  
+
+3.
+SELECT student_code as code, subject1,subject2,subject3, (subject1+subject2+subject3) as total_marks from student_marks;
+
+      CODE   SUBJECT1   SUBJECT2   SUBJECT3 TOTAL_MARKS
+---------- ---------- ---------- ---------- -----------
+      1001         55         45         78         178
+      1002         66         74         88         228
+      1003         87         54         65         206
+      1004         65         64         90         219
+      1005         78         88         65         231
+      1006         65         86         54         205
+      1007         67         79         49         195
+      1008         72         55         55         182
+      1009         71         59         58         188
+      1010         68         44         92         204
+      1011         89         96         78         263
+  
+
+4.
+ SELECT * from staff_masters where design_code IN (103,102);
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------------------------------------- ----------- ---------- --------- --------- ---------- ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    100001 Arvind                                                     102         30 15-JAN-80 15-JAN-03     100006
+         17000 Bangalore
+    100002 Shyam                                                      102         20 18-FEB-80 17-FEB-02     100007
+         20000 Chennai
+    100003 Mohan                                                      102         10 23-MAR-80 19-JAN-02     100006
+         24000 Mumbai
+    100004 Anil                                                       102         20 22-APR-77 11-MAR-01     100006
+         20000 Hyderabad
+    100006 Allen                                                      103         30 22-JAN-80 23-APR-01     100005
+         42000 Chennai
+    100007 Smith                                                      103         20 19-JUL-73 12-MAR-02     100005
+         62000 Mumbai
+    100008 Raviraj                                                    102         40 17-JUN-80 11-JAN-03     100006
+         18000 Bangalore
+
+
+5.
+
+SQL> SELECT employee_id,first_name,department_id,(sysdate-hire_date)/365 as expirence from employees where ((sysdate-hire_date)/12) > 18;
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_ID  EXPIRENCE
+----------- -------------------- ------------- ----------
+        100 Steven                          90 18.7443019
+        101 Neena                           90 16.4785485
+        102 Lex                             90 21.1689594
+        103 Alexander                       60  16.193617
+        104 Bruce                           60 14.8155348
+
+
+6.
+ SELECT e.first_name,d.department_name from employees e,departments d where e.department_id=d.department_id and e.hire_date<('1-jan-2003');
+
+FIRST_NAME           DEPARTMENT_NAME
+-------------------- ------------------------------
+Den                  Purchasing
+Susan                Human Resources
+Hermann              Public Relations
+Lex                  Executive
+Nancy                Finance
+
+
+7.
+
+SQL> SELECT first_name,job_id,salary*12*10 AS income
+  2  FROM employees
+  3  where department_id IN (10,30);
+
+FIRST_NAME           JOB_ID         INCOME
+-------------------- ---------- ----------
+Jennifer             AD_ASST        528000
+Den                  PU_MAN        1320000
+Alexander            PU_CLERK       372000
+Shelli               PU_CLERK       348000
+Sigal                PU_CLERK       336000
+Guy                  PU_CLERK       312000
+Karen                PU_CLERK       300000
+
+
+
+8.
+
+SQL> select s.staff_name, (sysdate-hiredate)/365 AS Experience
+  2  from staff_masters s, designation_masters d
+  3  where d.design_name='Lecturer';
+
+STAFF_NAME                                         EXPERIENCE
+-------------------------------------------------- ----------
+Arvind                                              19.174593
+Shyam                                               20.084182
+Mohan                                              20.1636341
+Anil                                                21.023908
+
+
+9.
+select CONCAT(CONCAT(student_name, ', '), dept_code) AS "Student_Info"
+	from student_masters;
+Student_Info
+--------------------------------------------------------------------------------
+Amit, 10
+Ravi, 10
+Ajay, 20
+Raj, 30
+Arvind, 40
+Rahul, 50
+Mehul, 20
+
+10.
+SQL> select staff_name, staff_sal from staff_masters
+  2  where staff_sal>12000 and staff_sal<25000
+  3  ORDER BY staff_name DESC, staff_sal ASC;
+
+STAFF_NAME                                          STAFF_SAL
+-------------------------------------------------- ----------
+Shyam                                                   20000
+Raviraj                                                 18000
+Rahul                                                   22000
+Mohan                                                   24000
+Arvind                                                  17000
+Anil                                                    20000
+
+6 rows selected.
+
+11.
+SQL> select * from employees
+  2  where manager_id is NULL;
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME
+----------- -------------------- -------------------------
+EMAIL                     PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY
+------------------------- -------------------- --------- ---------- ----------
+COMMISSION_PCT MANAGER_ID DEPARTMENT_ID
+-------------- ---------- -------------
+        100 Steven               King
+SKING                     515.123.4567         17-JUN-03 AD_PRES         24000
+                                     90
+
+
+12.
+SQL>  select student_name, dept_code, student_dob
+  2  from student_masters
+  3  where student_dob BETWEEN '01-Jan-1981' and '31-Mar-1983'
+  4  order by student_dob asc;
+
+STUDENT_NAME                                        DEPT_CODE STUDENT_D
+-------------------------------------------------- ---------- ---------
+Rahul                                                      50 16-JAN-81
+Dev                                                        10 11-MAR-81
+Kapil                                                      40 18-MAR-81
+Ravi Raj                                                   50 29-MAY-81
+Ravi                                                       10 01-NOV-81
+Ajay                                                       20 13-JAN-82
+Mehul                                                      20 17-JAN-82
+Arvind                                                     40 15-JAN-83
+
+8 rows selected.
+
+
+13.
+SQL> SELECT Deptno,sum(sal) FROM EMP
+  2      WHERE JOB NOT IN('MANAGER')
+  3           GROUP BY DeptNo --HAVING sum(sal) > 20000
+  4   ORDER BY DeptNo;
+
+    DEPTNO   SUM(SAL)
+---------- ----------
+        10       6300
+        20       7900
+        30       6550
+
+14.
+SQL> select b1.book_code,book_name
+  2  from book_masters b1, book_transactions b2
+  3  where b1.book_code=b2.book_code AND
+  4  book_actual_return_date<>book_expected_return_date AND
+  5  book_expected_return_date=NEXT_DAY(sysdate, 'Mon');
+
+no rows selected
+
+
+15.
+SQL>  select student_code, student_name, dept_name
+  2   from student_masters s, department_masters d
+  3  where s.dept_code=d.dept_code AND
+  4  dept_name IN(NVL2(dept_name,dept_name, 'No department'));
+
+STUDENT_CODE STUDENT_NAME                                       DEPT_NAME
+------------ -------------------------------------------------- --------------------------------------------------
+        1001 Amit                                               Computer Science
+        1002 Ravi                                               Computer Science
+        1003 Ajay                                               Electricals
+        1004 Raj                                                Electronics
+        1005 Arvind                                             Mechanics
+        1006 Rahul                                              Robotics
+        1007 Mehul                                              Electricals
+        1008 Dev                                                Computer Science
+        1009 Vijay                                              Electronics
+     
+
+16.
+
+ select staff_name, staff_sal, rpad('X', FLOOR(staff_sal/1000), 'X') AS salary
+  2  from staff_masters
+  3  order by staff_sal;
+-------
+Arvind                                                  17000
+XXXXXXXXXXXXXXXXX
+
+Raviraj                                                 18000
+XXXXXXXXXXXXXXXXXX
+
+Shyam                                                   20000
+XXXXXXXXXXXXXXXXXXXX
+
+Anil                                                    20000
+XXXXXXXXXXXXXXXXXXXX
+
+Rahul                                                   22000
+XXXXXXXXXXXXXXXXXXXXXX
+
+Mohan                                                   24000
+XXXXXXXXXXXXXXXXXXXXXXXX
+
+Ram                                                     32000
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+John                                                    32000
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Allen                                                   42000
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+======================================================================================================================
+                                                                 lab 2.                                              =
+======================================================================================================================
+1.
+SQL> select student_name,TO_CHAR(student_dob,'MONTH-DD-YYYY') AS STUDENT_DOB
+  2  FROM student_masters
+  3  WHERE TO_CHAR(student_dob,'DAY') LIKE  ('%SATURDAY%')
+  4  OR TO_CHAR(student_dob,'DAY') LIKE  ('%SUNDAY%') ;
+
+STUDENT_NAME                                       STUDENT_DOB
+-------------------------------------------------- --------------------------------------------
+Ravi                                               NOVEMBER -01-1981
+Raj                                                JANUARY  -14-1979
+Arvind                                             JANUARY  -15-1983
+Mehul                                              JANUARY  -17-1982
+Vijay                                              JANUARY  -19-1980
+Rajat                                              JANUARY  -20-1980
+Ramesh                                             DECEMBER -27-1980
+Amit Raj                                           SEPTEMBER-28-1980
+
+8 rows selected.
+
+2.
+ SELECT staff_name,round(months_between(sysdate,hiredate)) as "months worked"
+  2  FROM staff_masters
+  3  ORDER BY "months worked";
+
+STAFF_NAME                                         months worked
+-------------------------------------------------- -------------
+Rahul                                                        219
+Arvind                                                       230
+Raviraj                                                      230
+Smith                                                        240
+Shyam                                                        241
+Mohan                                                        242
+Ram                                                          242
+Allen                                                        251
+Anil                                                         252
+John                                                         254
+
+10 rows selected.
+-------------------------------------------------------------------------------------------------------------------------------------
+
+3.
+SQL>  SELECT *
+  2  FROM emp
+  3  WHERE ENAME LIKE 'A%S';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+4.
+ SELECT ename,job
+  2  FROM emp
+  3  WHERE (ename LIKE '__N%' OR ename LIKE '_N%')
+  4   AND (ename LIKE '%N' OR ename LIKE '%S');
+
+ENAME      JOB
+---------- ---------
+JONES      MANAGER
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+5.
+
+SQL> SELECT staff_name,LPAD(staff_sal,15,'$') AS salary
+  2  FROM staff_masters;
+
+STAFF_NAME                                         SALARY
+-------------------------------------------------- ------------------------------------------------------------
+Arvind                                             $$$$$$$$$$17000
+Shyam                                              $$$$$$$$$$20000
+Mohan                                              $$$$$$$$$$24000
+Anil                                               $$$$$$$$$$20000
+John                                               $$$$$$$$$$32000
+Allen                                              $$$$$$$$$$42000
+Smith                                              $$$$$$$$$$62000
+Raviraj                                            $$$$$$$$$$18000
+Rahul                                              $$$$$$$$$$22000
+Ram                                                $$$$$$$$$$32000
+
+10 rows selected.
+
+==================================================================================================================================================
+
+6.
+
+SQL>  SELECT ename
+  2  FROM emp
+  3  WHERE ename LIKE '%_%';
+
+ENAME
+----------
+SMITH
+ALLEN
+WARD
+JONES
+MARTIN
+BLAKE
+CLARK
+SCOTT
+KING
+TURNER
+ADAMS
+JAMES
+FORD
+MILLER
+
+14 rows selected.
+
+===================================================================================================================================================
+
+7.
+
+SQL> SELECT *
+  2  FROM emp
+  3  WHERE TO_CHAR(hiredate,'MONTH') LIKE '%DECEMBER%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+
+===================================================================================================================================================
+
+8.
+
+SQL> SELECT staff_name,staff_sal,
+  2  CASE
+  3  WHEN staff_sal >=50000 THEN 'A'
+  4  WHEN staff_sal  >25000 AND  staff_sal<50000 THEN 'B'
+  5  WHEN staff_sal  >10000 AND  staff_sal<25000 THEN 'C'
+  6  ELSE 'D'
+  7  END CASE
+  8  FROM staff_masters;
+
+STAFF_NAME                                          STAFF_SAL C
+-------------------------------------------------- ---------- -
+Arvind                                                  17000 C
+Shyam                                                   20000 C
+Mohan                                                   24000 C
+Anil                                                    20000 C
+John                                                    32000 B
+Allen                                                   42000 B
+Smith                                                   62000 A
+Raviraj                                                 18000 C
+Rahul                                                   22000 C
+Ram                                                     32000 B
+
+10 rows selected.
+
+===================================================================================================================================================
+
+9.
+
+SQL> SELECT staff_name,TO_CHAR(hiredate,'DAY')AS DAY
+  2  FROM staff_masters
+  3  ORDER BY TO_CHAR(hiredate,'DAY') ;
+
+STAFF_NAME                                         DAY
+-------------------------------------------------- ------------------------------------
+Allen                                              MONDAY
+Raviraj                                            SATURDAY
+Mohan                                              SATURDAY
+Anil                                               SUNDAY
+Shyam                                              SUNDAY
+John                                               SUNDAY
+Rahul                                              THURSDAY
+Ram                                                THURSDAY
+Smith                                              TUESDAY
+Arvind                                             WEDNESDAY
+
+10 rows selected.
+
+===================================================================================================================================================
+
+10.
+
+SQL> select first_name,RPAD('*',LENGTH(first_name),'*') AS name
+  2  from employees;
+FIRST_NAME           NAME
+Ellen               	 *****
+Sundar              	 ******
+Mozhe              	 *****
+David               	 *****
+
+===================================================================================================================================================
+
+11.
+
+
+
+
+12.
+SQL> SELECT *
+  2  FROM staff_masters
+  3  WHERE TO_CHAR(hiredate,'DD') BETWEEN 1 AND 15;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE  DEPT_CODE STAFF_DOB HIREDATE    MGR_CODE  STAFF_SAL STAFF_ADDRESS
+---------- -------------------------------------------------- ----------- ---------- --------- --------- ---------- ---------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    100001 Arvind                                                     102         30 15-JAN-80 15-JAN-03     100006      17000 Bangalore
+    100004 Anil                                                       102         20 22-APR-77 11-MAR-01     100006      20000 Hyderabad
+    100007 Smith                                                      103         20 19-JUL-73 12-MAR-02     100005      62000 Mumbai
+    100008 Raviraj                                                    102         40 17-JUN-80 11-JAN-03     100006      18000 Bangalore
+    100009 Rahul                                                      102         20 16-JAN-78 11-DEC-03     100006      22000 Hyderabad
+====================================================================================================================================================
+
+13.
+
+SQL> SELECT first_name,last_name,hire_date,
+  2  TO_CHAR(HIRE_DATE,'Day') AS joined_day
+  3  from employees
+  4  order by to_char(hire_date-1,'d');
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE JOINED_DAY
+-------------------- ------------------------- --------- ------------------------------------
+Renske               Ladwig                    14-JUL-03 Monday
+Gerald               Cambrault                 15-OCT-07 Monday
+Jason                Mallin                    14-JUN-04 Monday
+Bruce                Ernst                     21-MAY-07 Monday
+Danielle             Greene                    19-MAR-07 Monday
+Amit                 Banda                     21-APR-08 Monday
+Alana                Walsh                     24-APR-06 Monday
+Sundar               Ande                      24-MAR-08 Monday
+Shanta               Vollman                   10-OCT-05 Monday
+Sundita              Kumar                     21-APR-08 Monday
+
+=================================================================================================================================================
+
+14.
+
+SQL>  select INSTR('mississippi','i',2,3)
+  2  from dual;
+
+INSTR('MISSISSIPPI','I',2,3)
+----------------------------
+                           8
+
+=================================================================================================
+
+15.
+
+SQL> SELECT TO_CHAR(NEXT_DAY(SYSDATE,'FRIDAY'),'"Today is" DDSP,"of" MONTH ,YYYY') AS DAY FROM DUAL WHERE NEXT_DAY(SYSDATE,'TUESDAY')<LAST_DAY(SYSDATE) ;
+
+DAY
+-------------------------------------------------------------------
+Today is EIGHTEEN,of MARCH     ,2022
+
+====================================================================================================
+
+16.
+
+ select first_name,salary,max(salary) as heighest,min(salary) as minimum, round(avg(salary)) as average,round(sum(salary)) as total from employees group by first_name,salary;
+
+FIRST_NAME               SALARY   HEIGHEST    MINIMUM    AVERAGE      TOTAL
+-------------------- ---------- ---------- ---------- ---------- ----------
+Luis                       6900       6900       6900       6900       6900
+Den                       11000      11000      11000      11000      11000
+Laura                      3300       3300       3300       3300       3300
+Randall                    2600       2600       2600       2600       2600
+Alberto                   12000      12000      12000      12000      12000
+Gerald                    11000      11000      11000      11000      11000
+Christopher                8000       8000       8000       8000       8000
+Amit                       6200       6200       6200       6200       6200
+Sundita                    6100       6100       6100       6100       6100
+Jonathon                   8600       8600       8600       8600       8600
+Jean                       3100       3100       3100       3100       3100
+Kelly                      3800       3800       3800       3800       3800
+
+====================================================================================================
+
+17.
+
+SQL>  select department_id,max(salary) as heighest,min(salary) as minimum, round(avg(salary)) as average,round(sum(salary)) as total from employees group by department_id;
+
+DEPARTMENT_ID   HEIGHEST    MINIMUM    AVERAGE      TOTAL
+------------- ---------- ---------- ---------- ----------
+          100      12008       6900       8601      51608
+           30      11000       2500       4150      24900
+                    7000       7000       7000       7000
+           90      24000      17000      19333      58000
+           20      13000       6000       9500      19000
+           70      10000      10000      10000      10000
+          110      12008       8300      10154      20308
+           50       8200       2100       3476     156400
+           80      14000       6100       8956     304500
+           40       6500       6500       6500       6500
+           60       9000       4200       5760      28800
+           10       4400       4400       4400       4400
+
+=====================================================================================================
+
+18.
+
+=====================================================================================================
+
+19.
+
+SQL> select count(manager_id) as total_number_of_managers from employees;
+
+TOTAL_NUMBER_OF_MANAGERS
+------------------------
+                     106
+
+====================================================================================================
+
+20.
+
+SQL> SELECT manager_id, MIN(salary),first_name as manager_name FROM employees WHERE manager_id IS NOT NULL
+ HAVING min(salary)>10000  GROUP BY manager_id,first_name  order by min(salary) DESC;
+
+MANAGER_ID MIN(SALARY) MANAGER_NAME
+---------- ----------- --------------------
+       100       17000 Lex
+       100       17000 Neena
+       100       14000 John
+       100       13500 Karen
+       100       13000 Michael
+       101       12008 Shelley
+       101       12008 Nancy
+       100       12000 Alberto
+       148       11500 Lisa
+       100       11000 Den
+       149       11000 Ellen
+       100       11000 Gerald
+       147       10500 Clara
+       100       10500 Eleni
+
+14 rows selected.
+
+=========================================================================================================================================
+                                                                lab 3.
+=========================================================================================================================================
+3.1
+
+1.
+
+SQL> SELECT S.STAFF_NAME,D.DEPT_CODE,D.DEPT_NAME,S.STAFF_SAL
+  2  FROM DEPARTMENT_MASTERS D,STAFF_MASTERS S
+  3  WHERE S.DEPT_CODE=D.DEPT_CODE
+  4  AND S.STAFF_SAL > 20000
+  5  ;
+
+STAFF_NAME                                          DEPT_CODE DEPT_NAME                                           STAFF_SAL
+-------------------------------------------------- ---------- -------------------------------------------------- ----------
+John                                                       10 Computer Science                                        32000
+Mohan                                                      10 Computer Science                                        24000
+Rahul                                                      20 Electricals                                             22000
+Smith                                                      20 Electricals                                             62000
+Ram                                                        30 Electronics                                             32000
+Allen                                                      30 Electronics                                             42000
+
+6 rows selected.
+
+========================================================================================================================================
+
+2.
+SQL> SELECT S.STAFF_NAME,D.DEPT_CODE,D.DEPT_NAME
+  2  FROM DEPARTMENT_MASTERS D,STAFF_MASTERS S
+  3  WHERE S.DEPT_CODE=D.DEPT_CODE
+  4  AND D.DEPT_CODE!=10
+  5  AND (STAFF_NAME LIKE '%A%' or STAFF_NAME LIKE '%a%');
+
+STAFF_NAME                                          DEPT_CODE DEPT_NAME
+-------------------------------------------------- ---------- --------------------------------------------------
+Arvind                                                     30 Electronics
+Shyam                                                      20 Electricals
+Anil                                                       20 Electricals
+Allen                                                      30 Electronics
+Raviraj                                                    40 Mechanics
+Rahul                                                      20 Electricals
+Ram                                                        30 Electronics
+
+7 rows selected.
+
+=======================================================================================================================================
+
+3.
+
+
+SQL> SELECT S.STAFF_NAME Staff#,S.STAFF_CODE Staff,E.DEPT_NAME,S.MGR_CODE Mgr#,S.STAFF_NAME Manager
+  2  FROM STAFF_MASTERS S ,DEPARTMENT_MASTERS E
+  3  WHERE S.DEPT_CODE=E.DEPT_CODE ;
+
+STAFF#                                                  STAFF DEPT_NAME                                                MGR# MANAGER
+-------------------------------------------------- ---------- -------------------------------------------------- ---------- --------------------------------------------------
+John                                                   100005 Computer Science                                       100007 John
+Mohan                                                  100003 Computer Science                                       100006 Mohan
+Rahul                                                  100009 Electricals                                            100006 Rahul
+Anil                                                   100004 Electricals                                            100006 Anil
+Smith                                                  100007 Electricals                                            100005 Smith
+Shyam                                                  100002 Electricals                                            100007 Shyam
+Ram                                                    100010 Electronics                                            100007 Ram
+Allen                                                  100006 Electronics                                            100005 Allen
+Arvind                                                 100001 Electronics                                            100006 Arvind
+Raviraj                                                100008 Mechanics                                              100006 Raviraj
+
+10 rows selected.
+
+=========================================================================================================================================
+
+4.
+
+SQL> SELECT s.student_code,m.student_name,d.dept_name,s.subject1,s.subject2,s.subject3
+  2  FROM student_marks s,department_masters d,student_masters m
+  3  where s.student_code=m.student_code
+  4  AND d.dept_code=m.dept_code
+  5  AND s.subject1>60
+  6  AND s.subject2>60
+  7  AND s.subject3 > 60
+  8  AND d.dept_code IN (10,20)
+  9  ;
+
+STUDENT_CODE STUDENT_NAME                                       DEPT_NAME                                            SUBJECT1   SUBJECT2   SUBJECT3
+------------ -------------------------------------------------- -------------------------------------------------- ---------- ---------- ----------
+        1014 Sunil                                              Computer Science                                           65         64         90
+        1014 Sunil                                              Computer Science                                           73         74         65
+        1002 Ravi                                               Computer Science                                           89         96         78
+        1002 Ravi                                               Computer Science                                           66         74         88
+        1021 Sumit                                              Electricals                                                78         79         78
+        1013 Anil                                               Electricals                                                66         74         88
+        1007 Mehul                                              Electricals                                                68         78         74
+
+7 rows selected.
+
+===========================================================================================================================================
+
+5.
+
+SQL> SELECT S.STUDENT_CODE,S.STUDENT_NAME,B.BOOK_CODE,BB.BOOK_NAME
+  2  FROM STUDENT_MASTERS S,BOOK_TRANSACTIONS B, BOOK_MASTERS BB
+  3  WHERE S.STUDENT_CODE=B.STUDENT_CODE
+  4  AND TO_CHAR(B.BOOK_EXPECTED_RETURN_DATE,'DD MM YYYY')
+  5  LIKE TO_CHAR(SYSDATE,'DD MM YYYY');
+
+no rows selected
+===================================================================================================
+
+6.
+
+
+SQL> SELECT S.STAFF_CODE,S.STAFF_NAME,D.DEPT_NAME,F.DESIGN_NAME,G.BOOK_NAME,H.BOOK_ISSUE_DATE
+  2  FROM STAFF_MASTERS S,DEPARTMENT_MASTERS D,DESIGNATION_MASTERS F,BOOK_MASTERS G,BOOK_TRANSACTIONS H
+  3  WHERE MONTHS_BETWEEN(SYSDATE,H.BOOK_ISSUE_DATE)<30;
+
+no rows selected
+
+=================================================================================================
+
+7.
+SQL> select s.staff_code,s.staff_name,de.design_name,dep.dept_name, em.staff_name HEAD
+  2   from staff_masters s,designation_masters de,department_masters dep, staff_masters em
+  3  where  s.mgr_code= em.staff_code
+  4  and s.design_code=de.design_code
+  5  and s.dept_code=dep.dept_code
+  6  and de.design_name!='HOD';
+
+STAFF_CODE STAFF_NAME                                         DESIGN_NAME                                        DEPT_NAME                                          HEAD
+---------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- --------------------------------------------------
+    100005 John                                               Director                                           Computer Science                                   Smith
+    100002 Shyam                                              Professor                                          Electricals                                        Smith
+    100003 Mohan                                              Professor                                          Computer Science                                   Allen
+    100009 Rahul                                              Professor                                          Electricals                                        Allen
+    100004 Anil                                               Professor                                          Electricals                                        Allen
+    100001 Arvind                                             Professor                                          Electronics                                        Allen
+    100008 Raviraj                                            Professor                                          Mechanics                                          Allen
+    100010 Ram                                                Reader                                             Electronics                                        Smith
+    100007 Smith                                              Reader                                             Electricals                                        John
+    100006 Allen                                              Reader                                             Electronics                                        John
+
+10 rows selected.
+
+===================================================================================================
+
+8.
+
+SQL> SELECT s.Student_code ,m.student_name,d.dept_name ,(s.subject1+s.subject2+s.subject3) as "Total Marks"
+  2  FROM student_marks s,student_masters m ,department_masters d
+  3  WHERE s.student_code=m.student_code
+  4  AND d.dept_code=m.dept_code;
+
+STUDENT_CODE STUDENT_NAME                                       DEPT_NAME                                          Total Marks
+------------ -------------------------------------------------- -------------------------------------------------- -----------
+        1001 Amit                                               Computer Science                                           178
+        1002 Ravi                                               Computer Science                                           228
+        1003 Ajay                                               Electricals                                                206
+        1004 Raj                                                Electronics                                                219
+        1005 Arvind                                             Mechanics                                                  231
+        1006 Rahul                                              Robotics                                                   205
+        1007 Mehul                                              Electricals                                                195
+        1008 Dev                                                Computer Science                                           182
+        1009 Vijay                                              Electronics                                                188
+===========================================================================================================
+
+9.
+
+SELECT s.Staff_Code, s.Staff_Name, de.Design_name, d.Dept_name, b.Book_Code, b1.Book_Name, b1.book_pub_author,
+  2         CASE
+  3          WHEN(book_expected_return_date <> book_actual_return_date)
+  4          THEN 5*(sysdate-book_expected_return_date) ELSE 0
+  5          END As  Fine
+  6  FROM staff_masters s, department_masters d, designation_masters de, book_transactions b, book_masters b1
+  7  WHERE d.dept_code = s.dept_code
+  8  AND s.design_code = de.design_code
+  9  AND s.staff_code = b.staff_code
+ 10  AND b.book_code = b1.book_code;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_NAME                                        DEPT_NAME                                           BOOK_CODE BOOK_NAME                                      BOOK_PUB_AUTHOR                                          FINE
+---------- -------------------------------------------------- -------------------------------------------------- -------------------------------------------------- ---------- -------------------------------------------------- -------------------------------------------------- ----------
+    100006 Allen                                              Reader                                             Electronics                                          10000008 Computer Networks                              Tanenbaum                                          20078.8308
+    100006 Allen                                              Reader                                             Electronics                                          10000007 Intoduction To Algorithams                     Cormen                                             21798.8308
+    100010 Ram                                                Reader                                             Electronics                                          10000009 Introduction to O/S                            Millan                                             19968.8308
+    100007 Smith                                              Reader                                             Electricals                                          10000007 Intoduction To Algorithams                     Cormen                                             19973.8308
+    100007 Smith                                              Reader                                             Electricals                                          10000005 Relational DBMS                                        B.C. Desai
+
+=========================================================================================================
+
+10.
+
+SQL> SELECT Staff_Code, Staff_Name,STAFF_SAL
+  2  FROM STAFF_MASTERS WHERE STAFF_SAL<(SELECT AVG(STAFF_SAL) FROM STAFF_MASTERS);
+
+STAFF_CODE STAFF_NAME                                          STAFF_SAL
+---------- -------------------------------------------------- ----------
+    100001 Arvind                                                  17000
+    100002 Shyam                                                   20000
+    100003 Mohan                                                   24000
+    100004 Anil                                                    20000
+    100008 Raviraj                                                 18000
+    100009 Rahul                                                   22000
+=========================================================================================================
+
+11.
+
+SQL> SELECT distinct(e.Staff_Code), e.Staff_Name
+  2  FROM STAFF_MASTERS e ,Staff_masters j
+  3  where e.staff_code not in (select mgr_code from staff_masters);
+
+STAFF_CODE STAFF_NAME
+---------- --------------------------------------------------
+    100003 Mohan
+    100001 Arvind
+    100002 Shyam
+    100008 Raviraj
+    100010 Ram
+    100004 Anil
+    100009 Rahul
+
+==========================================================================================================
+
+12.
+
+SQL> select Book_pub_author, Book_name
+  2    from book_masters
+  3   where Book_pub_author in ( select Book_pub_author
+  4                                from book_masters
+  5                               group by Book_pub_author
+  6                              having count(distinct Book_name)>1 )
+  7   order by Book_pub_author, Book_name;
+
+BOOK_PUB_AUTHOR                                    BOOK_NAME
+-------------------------------------------------- --------------------------------------------------
+Yashavant Kanetkar                                 Let Us C
+Yashavant Kanetkar                                 Let Us C++
+
+==========================================================================================================
+
+13.
+
+
+SQL> SELECT S.Staff_Code,S.Staff_Name,DP.DEPT_NAME
+  2  FROM STAFF_MASTERS S,BOOK_TRANSACTIONS D ,DEPARTMENT_MASTERS DP
+  3  WHERE DP.DEPT_CODE=S.DEPT_CODE
+  4  AND D.STAFF_CODE =S.STAFF_CODE
+  5  GROUP BY S.STAFF_CODE,S.STAFF_NAME,DP.DEPT_NAME
+  6  HAVING COUNT(D.BOOK_CODE)>1;
+
+STAFF_CODE STAFF_NAME                                         DEPT_NAME
+---------- -------------------------------------------------- --------------------------------------------------
+    100007 Smith                                              Electricals
+    100006 Allen                                              Electronics
+
+===========================================================================================================
+
+14.
+
+SQL> SELECT S.STUDENT_CODE,S.STUDENT_NAME,D.DEPT_NAME,M.SUBJECT1,M.SUBJECT2,M.SUBJECT3 ,(M.SUBJECT1+M.SUBJECT2+M.SUBJECT3 ) "TOTAL MARKS"
+  2  FROM STUDENT_MARKS M,STUDENT_MASTERS S,DEPARTMENT_MASTERS D
+  3  WHERE M.STUDENT_CODE=S.STUDENT_CODE
+  4  AND D.DEPT_CODE=S.DEPT_CODE
+  5  AND ROWNUM<=10
+  6  ORDER BY (M.Subject1+M.subject2+M.subject3) DESC;
+
+STUDENT_CODE STUDENT_NAME                                       DEPT_NAME                                            SUBJECT1   SUBJECT2   SUBJECT3 TOTAL MARKS
+------------ -------------------------------------------------- -------------------------------------------------- ---------- ---------- ---------- -----------
+        1005 Arvind                                             Mechanics                                                  78         88         65         231
+        1002 Ravi                                               Computer Science                                           66         74         88         228
+        1004 Raj                                                Electronics                                                65         64         90         219
+        1003 Ajay                                               Electricals                                                87         54         65         206
+        1006 Rahul                                              Robotics                                                   65         86         54         205
+        1010 Rajat                                              Mechanics                                                  68         44         92         204
+        1007 Mehul                                              Electricals                                                67         79         49         195
+        1009 Vijay                                              Electronics                                                71         59         58         188
+        1008 Dev                                                Computer Science                                           72         55         55         182
+        1001 Amit                                               Computer Science                                           55         45         78         178
+
+10 rows selected.
+
+==============================================================================================================
+
+15.
+
+SQL> SELECT S.STAFF_NAME,D.DEPT_NAME,S.STAFF_SAL
+  2  FROM STAFF_MASTERS S,DEPARTMENT_MASTERS D
+  3  WHERE S.DEPT_CODE=D.DEPT_CODE
+  4  GROUP BY S.STAFF_NAME,D.DEPT_NAME,S.STAFF_SAL
+  5  HAVING STAFF_SAL> (SELECT AVG(STAFF_SAL) FROM STAFF_MASTERS);
+
+STAFF_NAME                                         DEPT_NAME                                           STAFF_SAL
+-------------------------------------------------- -------------------------------------------------- ----------
+Smith                                              Electricals                                             62000
+Allen                                              Electronics                                             42000
+Ram                                                Electronics                                             32000
+John                                               Computer Science                                        32000
+
+================================================================================================================
+
+16.
+
+SQL> select staff_name, dept_code
+  2  from staff_masters
+  3  where dept_code in
+  4  (select dept_code from staff_masters where staff_code = 100001);
+
+STAFF_NAME                                          DEPT_CODE
+-------------------------------------------------- ----------
+Arvind                                                     30
+Allen                                                      30
+Ram                                                        30
+
+================================================================================================================
+
+17.
+
+SQL>  SELECT S.Student_Code, Student_Name , (subject1+subject2+subject3) as Total
+  2  FROM student_masters s, student_marks m
+  3  WHERE s.student_code = m.student_code
+  4  AND (subject1+subject2+subject3) IN (Select max(subject1+subject2+subject3)
+  5  FROM student_marks s1, student_masters m1,department_masters d1
+  6  WHERE s1.student_code = m1.student_code
+  7   AND m1.dept_code= d1.dept_code
+  8   AND dept_name = 'Computer Science');
+
+STUDENT_CODE STUDENT_NAME                                            TOTAL
+------------ -------------------------------------------------- ----------
+        1011 Sunder                                                    263
+        1002 Ravi                                                      263
+
+===============================================================================================================
+
+18.
+
+
+SQL> SELECT Student_Code, Student_Name, Dept_Name
+  2  FROM Student_masters, department_masters
+  3  WHERE Student_masters.dept_code = department_masters.dept_code
+  4  AND Student_masters.dept_code IN(SELECT dept_code FROM
+  5  (SELECT dept_code, count(student_code)
+  6  FROM student_masters
+  7  GROUP BY dept_code
+  8  ORDER BY count(student_code) desc)
+  9  WHERE ROWNUM=1);
+
+STUDENT_CODE STUDENT_NAME                                       DEPT_NAME
+------------ -------------------------------------------------- --------------------------------------------------
+        1020 Amrit                                              Computer Science
+        1014 Sunil                                              Computer Science
+        1008 Dev                                                Computer Science
+        1002 Ravi                                               Computer Science
+        1001 Amit                                               Computer Science
+
+===============================================================================================================
+
+19.
+SQL> SELECT Staff_Code, Staff_Name, DepT_Name,DESIGN_NAME
+  2  FROM STAFF_MASTERS S,DEPARTMENT_MASTERS D, DESIGNATION_MASTERS DD
+  3  WHERE S.DEPT_CODE=D.DEPT_CODE
+  4  AND S.DESIGN_CODE=DD.DESIGN_CODE
+  5  AND S.hiredate IN
+  6      (SELECT max(hiredate)
+  7       FROM STAFF_MASTERS
+  8        )
+  9  ORDER BY S.hiredate DESC;
+
+STAFF_CODE STAFF_NAME                                         DEPT_NAME                                          DESIGN_NAME
+---------- -------------------------------------------------- -------------------------------------------------- --------------------------------------------------
+    100009 Rahul                                              Electricals                                        Professor
+
+==============================================================================================================
+
+20.
+SQL> SELECT s.staff_name, COUNT(*)
+  2  FROM staff_masters s ,staff_masters m
+  3  WHERE s.staff_code=m.mgr_code
+  4  GROUP BY s.staff_name;
+
+STAFF_NAME                                           COUNT(*)
+-------------------------------------------------- ----------
+John                                                        2
+Allen                                                       5
+Smith                                                       3
+
+====================================================================================================================
+3.2 set operator
+=====================================================================================================================
+
+1.
+
+SELECT * FROM previous_products 
+	UNION
+	SELECT *
+	FROM current_products ;
+
+==============================================================================================================
+
+2.
+
+SELECT *
+	FROM previous_products 
+	UNION ALL
+	SELECT *
+	FROM current_products ; 
+
+============================================================================================================
+
+3.SELECT *
+	FROM previous_products 
+	INTERSECT
+	SELECT *
+	FROM current_products;
+
+=========================================================================================================
+
+4.
+ SELECT *
+	FROM previous_products 
+	MINUS
+	SELECT *
+	FROM current_products ;
+========================================================================================================
+
+============================================================================================================
+   						LAB 4
+============================================================================================================
+
+1.
+SQL> CREATE TABLE CUSTOMER(Customerid Number(5),
+  2        CustomerName Number(10),
+  3        Address1 Varchar2(30),
+  4        Address2  Varchar2(30));
+
+Table created.
+
+==========================================================================================================
+
+2.
+
+SQL> ALTER TABLE CUSTOMER
+  2  MODIFY CustomerName VARCHAR2(30) NOT NULL;
+
+Table altered.
+
+==========================================================================================================
+
+3.
+
+SQL> ALTER TABLE CUSTOMER
+  2  ADD (Gender  Varchar2(1),
+  3       Age  Number(3),
+  4       PhoneNo Number(10));
+
+Table altered.
+
+====================================================================================================
+
+4.
+
+SQL> Insert INTO customer values (1000, 'Allen', '#115 Chicago', '#115 Chicago', 'M', 25, 7878776);
+
+1 row created.
+
+SQL> Insert INTO customer values (1001, 'George',' #116 France', '#116 France', 'M', 25, 434524);
+
+1 row created.
+
+SQL> Insert INTO customer values (1002, 'Becker', '#114 New York', '#114 New York', 'M', 45, 431525);
+
+1 row created.
+
+
+========================================================================================================
+
+5.
+
+ALTER TABLE CUSTOMER
+MODIFY
+CustomerId VARCHAR2(30) CONSTRAINT Custld_Prim PRIMARY KEY;
+
+==========================================================================================================
+
+6.
+
+
+SQL> Insert INTO customer values (1002, 'John', '#114 Chicago', '#114 Chicago', 'M', 45, 439525);
+
+1 row created.
+
+===========================================================================================================
+
+7.
+
+SQL>
+SQL> Insert INTO customer values (1002, 'Becker', '#114 New York', '#114 New york', 'M', 45, 431525);
+
+1 row created.
+
+SQL> Insert INTO customer values (1003, 'Nanapatekar', '#115 India', '#115 India', 'M', 45, 431525);
+
+1 row created.
+
+
+===============================================================================================================
+
+8.
+
+alter table customer ENABLE constraint Custld_Prim;
+
+====================================================================================================
+
+9.
+
+alter table customer DROP constraint Custld_Prim;
+
+Insert INTO customer values (1002, 'Becker', '#114 New York', '#114 New york', 'M', 45, 431525,15000.50);
+Insert INTO customer values (1003, 'Nanapatekar', '#115 India', '#115 India', 'M', 45, 431525, 20000.50);
+
+
+==================================================================================================
+
+10.
+
+TRUNCATE TABLE Customer;
+
+==========================================================================
+11.
+
+ALTER TABLE CUSTOMER
+ADD Email Varchar2(20);
+
+===========================================================================
+
+12.
+
+ALTER TABLE Customer 
+DROP COLUMN Email;
+
+=========================================================================
+
+13.
+
+ALTER TABLE CUSTOMER
+ADD EmailId Varchar2(20);
+
+=========================================================================
+
+14.
+
+ALTER TABLE CUSTOMER
+SET UNUSED (EmailId);
+
+========================================================================
+
+15.
+
+ALTER TABLE CUSTOMER
+DROP UNUSED COLUMNS;
+
+=======================================================================
+
+16.
+COMMENT ON TABLE Customer IS 'Customer Details';
+
+======================================================================
+
+17.
+Select * from USER_TAB_COMMENTS;
+
+=======================================================================
+
+18.
+COMMENT ON COLUMN Customer.Phoneno IS 'Personal Contact no';
+
+=======================================================================
+
+19.
+
+Select * from USER_COL_COMMENTS;
+
+=====================================================================
+
+20.
+CREATE TABLE SUPPLIERS AS 
+SELECT customerid AS SuppID, customername  AS SName, address1 AS Addr1, address2 AS Addr2, phoneno  AS Contactno 
+FROM CUSTOMER;
+
+===========================================================================
+
+21.
+DROP TABLE Suppliers;
+
+CREATE TABLE CustomerMaster 
+(CustomerId Number(5) CONSTRAINT CustId_PK PRIMARY KEY,
+CustomerName Varchar2(30) NOT NULL,
+Addressl Varchar2(30) NOT NULL,
+Address2 Varchar2(30),
+Gender  char,
+Age  Number(3),
+PhoneNo Number(10));
+
+===========================================================================
+
+22.
+
+CREATE TABLE AccountsMaster
+(CustomerId  Number(5),
+AccountNumber  Number(10,2) constraint Acc_PK Primary key ,
+AccountType  Char(3),
+LedgerBalance  Number(10,2) Not Null);
+
+CREATE SEQUENCE SEQ_ACC START WITH 1000 INCREMENT BY 1 MAXVALUE 1000000; 
+
+===============================================================================
+
+23.
+
+ALTER TABLE AccountsMaster ADD constraint Cust_acc FOREIGN KEY(customerId) REFERENCES customermaster(customerid);
+
+================================================================================
+
+24.
+
+Insert INTO customerMaster values(1000, 'Allen', '#115 Chicago', '#115 Chicago', 'M', 25, 7878776);
+Insert INTO customerMaster values(1001,'George', '#116 France', '#116 France', 'M', 25, 434524);
+Insert INTO customerMaster values(1002,'Becker', '#114 New York','#114 New York', 'M', 45, 431525);
+
+==============================================================================================
+
+25.
+ALTER TABLE AccountsMaster ADD CONSTRAINT ck_ac CHECK(AccountType='NRI' OR AccountType='IND');
+
+================================================================================================
+
+26.
+INSERT INTO AccountsMaster values(1000, SEQ_ACC.NEXTVAL,'NRI', 50000);
+INSERT INTO AccountsMaster values(1001, SEQ_ACC.NEXTVAL,'IND', 10000.2);
+INSERT INTO AccountsMaster values(1002, SEQ_ACC.NEXTVAL,'NRI', 72003.5);
+INSERT INTO AccountsMaster values(1000, SEQ_ACC.NEXTVAL,'IND', 5230);
+INSERT INTO AccountsMaster values(1002, SEQ_ACC.NEXTVAL,'IND', 51234);
+
+===============================================================================================
+
+27.
+
+ALTER TABLE AccountsMaster ADD CONSTRAINT Balance_check CHECK (LedgerBalance > 5000);
+
+==============================================================================================
+28.
+ALTER TABLE AccountsMaster DROP CONSTRAINT cust_acc;
+
+ALTER TABLE AccountsMaster
+ADD CONSTRAINT cust_acc
+   FOREIGN KEY (CustomerId)
+   REFERENCES CustomerMaster(CustomerId)
+   ON DELETE CASCADE;
+
+=============================================================================================
+29.
+
+CREATE TABLE AccountDetails AS (SELECT * FROM AccountsMaster);
+
+=============================================================================================
+
+30.
+
+ALTER TABLE AccountDetails RENAME TO BackUpTable;
+
+=============================================================================================
+
+31.
+
+CREATE OR REPLACE VIEW Acc_view 
+AS
+  SELECT C.CustomerId AS CustomerCode, C.CustomerName AS AccountHolderName, A.AccountNumber, A.AccountType AS Type, A.LedgerBalance AS Balance
+  FROM AccountsMaster A, CustomerMaster C
+  WHERE A.CustomerId = CustomerID;
+
+=============================================================================================
+
+32.
+CREATE OR REPLACE VIEW vAccs_Dtls
+AS
+  SELECT * 
+  FROM AccountsMaster
+  WHERE AccountType = 'IND' AND LedgerBalance >= 10000 WITH CHECK OPTION CONSTRAINT vAccs_Dtls;
+
+============================================================================================
+33.
+
+CREATE OR REPLACE VIEW accsvw10
+AS
+  SELECT * 
+  FROM AccountsMaster
+  WITH READ ONLY CONSTRAINT accvw10;
+
+=================================================================================================
+
+34.
+SELECT dept_name
+FROM department_masters d,
+(SELECT dept_code,staff_sal
+      FROM staff_masters
+      ORDER BY staff_sal desc) s
+WHERE d.dept_code = s.dept_code 
+AND rownum=1;
+
+==============================================================================================
+
+35.
+SELECT dept_code,MAX(staff_sal) FROM Staff_masters 
+GROUP BY Dept_code 
+UNION
+SELECT dept_code,MAX(staff_sal) FROM Staff_masters d
+WHERE staff_sal<(SELECT max(staff_sal) 
+		 FROM staff_masters d1 
+		 WHERE d.dept_code=d1.dept_code)
+GROUP BY dept_code
+ORDER BY 1, 2 desc;
+
+============================================================================================
+
+36.
+CREATE SEQUENCE Seq_Dept 
+INCREMENT BY 10
+START WITH 40
+MAXVALUE 200
+NOCYCLE;
+
+========================================================================================
+
+37.
+INSERT INTO Dept VALUES(Seq_dept.NEXTVAL,'HUMAN RESOURCE','CALIFORNIA');
+INSERT INTO Dept VALUES(Seq_dept.NEXTVAL,'FINANCE','VANCOUVER');
+INSERT INTO Dept VALUES(Seq_dept.NEXTVAL,'MANAGEMENT','FRANCE');
+
+===========================================================================================
+
+38.
+ALTER SEQUENCE Seq_Dept INCREMENT BY 5;
+
+================================================================================
+
+39.
+
+DROP SEQUENCE Seq_Dept;
+=========================================================================
+40.
+CREATE UNIQUE INDEX No_name ON Dept(DeptNo, Dname);
+
+==========================================================================
+41.
+SELECT index_name 
+FROM user_indexes 
+WHERE table_name='DEPT';
+
+===========================================================================
+42.
+
+CREATE PUBLIC SYNONYM SynEmp FOR EMP;
+============================================================================
+43.
+
+SELECT * 
+FROM user_synonyms;
+=============================================================================
+
+
+===========================================================================================
+lab 5
+===========================================================================================
+
+
+5.1
+
+1.
+CREATE TABLE EMPLOYEE AS SELECT * FROM EMP WHERE 1=3;
+
+DESC EMPLOYEE;
+==============================================================================
+2.
+INSERT INTO EMPLOYEE(EMPNO,ENAME,SAL,DEPTNO)
+SELECT EMP.EMPNO,EMP.ENAME,EMP.SAL,EMP.DEPTNO
+FROM EMP;
+
+SELECT * FROM EMPLOYEE;
+
+==============================================================================
+3.
+UPDATE EMPLOYEE 
+SET JOB=(SELECT JOB FROM EMPLOYEE WHERE EMPNO=7788),DEPTNO=(SELECT DEPTNO FROM EMPLOYEE WHERE EMPNO=7788)
+WHERE EMPNO=7698;
+================================================================================
+
+4.
+DELETE FROM DEPT
+WHERE DNAME='SALES';
+
+=================================================================================
+5.
+UPDATE EMPLOYEE SET DEPTNO=(SELECT DEPTNO FROM EMPLOYEE WHERE EMPNO=7698) WHERE EMPNO=7788;
+=================================================================================
+6.
+INSERT INTO EMPLOYEE (EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO) 
+VALUES (1000,'ALLEN', 'CLERK',1001,'12-JAN-01', 3000, 2,10);
+
+INSERT INTO EMPLOYEE (EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO) 
+VALUES (1001,'George', 'analyst', null, '08 Sep 92', 5000,0, 10);
+
+INSERT INTO EMPLOYEE (EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO) 
+VALUES (1002, 'Becker', 'Manager', 1000, '4 Nov 92', 2800,4, 20);
+
+INSERT INTO EMPLOYEE (EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO) 
+VALUES (1003, 'Bill', 'Clerk', 1002, '4 Nov 92',3000, 0, 20);
+
+=============================================================================================
+
+
+=============================================================================================
+						LAB 6
+=============================================================================================
+
+6.1
+
+1.
+INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERNAME,ADDRESS1,ADDRESS2,GENDER,AGE,PHONENO,NEWVALUE)
+VALUES(6000, 'John', '#115 Chicago', '#115 Chicago', 'M', 25, 7878776, 10000);
+
+INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERNAME,ADDRESS1,ADDRESS2,GENDER,AGE,PHONENO,NEWVALUE)
+VALUES(6001,'Jack', '#116 France', '#116 France', 'M', 25, 434524, 20000);
+
+INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERNAME,ADDRESS1,ADDRESS2,GENDER,AGE,PHONENO,NEWVALUE)
+VALUES(6002, 'James', '#114 New York', '#114 New York', 'M', 45, 431525, 15000.50);
+
+====================================================================================
+
+2.
+savepoint SP1;
+
+===================================================================================
+3.
+INSERT INTO CUSTOMER(CUSTOMERID,CUSTOMERNAME,ADDRESS1,ADDRESS2,GENDER,AGE,PHONENO,NEWVALUE)
+VALUES(6003, 'John','#114 Chicago', '#114 Chicago','M', 45, 439525, 19000.60);
+
+==================================================================================
+4.
+rollback to savepoint sp1;
+
+select * from customer;
+
+
