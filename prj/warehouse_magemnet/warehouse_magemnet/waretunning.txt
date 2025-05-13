@@ -1,0 +1,1620 @@
+Created the user; { ware/ware }
+
+````````````````````````````````````````````````````
+Inserted the data;
+
+SQL> CREATE TABLE BIN_DETAILS (
+  2  BIN_NUMBER           number(5)   ,
+  3  WAREHOUSE_ID         varchar2(4)   ,
+  4  CONSTRAINT PK_BIN_DETAILS UNIQUE ( BIN_NUMBER )
+  5  );
+
+Table created.
+
+SQL>  INSERT INTO BIN_DETAILS VALUES(01,'WH1');
+
+1 row created.
+
+SQL>  INSERT INTO BIN_DETAILS VALUES(02,'WH2');
+
+1 row created.
+
+SQL>  INSERT INTO BIN_DETAILS VALUES(03,'WH3');
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE MANAGER_MASTER (
+  2  MANAGER_ID           number(5)   ,
+  3  WAREHOUSE_ID         varchar2(4)   ,
+  4  EMPLOYEE_NUMBER      number(5)   ,
+  5  CONSTRAINT PK_MANAGER_MAST UNIQUE ( MANAGER_ID ) ,
+  6  CONSTRAINT UNQ_MANAGER_MAST_EMPLOYEE_NUM UNIQUE ( EMPLOYEE_NUMBER )
+  7  );
+
+Table created.
+
+SQL>  INSERT INTO MANAGER_MASTER VALUES(10101,'WH1',100);
+
+1 row created.
+
+SQL>  INSERT INTO MANAGER_MASTER VALUES(10102,'WH2',101);
+
+1 row created.
+
+SQL>  INSERT INTO MANAGER_MASTER VALUES(10103,'WH3',102);
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE WAREHOUSE_MASTER (
+  2  WAREHOUSE_ID         varchar2(4)   ,
+  3  WAREHOUSE_NAME       varchar2(25)   ,
+  4  WAREHOUSE_ADDRESS    varchar2(100)   ,
+  5  MANAGER_ID           number(5)   ,
+  6  BIN_NUMBER           number(5)   ,
+  7  CONSTRAINT PK_WAREHOUSE_MA UNIQUE ( WAREHOUSE_ID )
+  8  );
+
+Table created.
+
+SQL>  INSERT INTO WAREHOUSE_MASTER VALUES('WH1','AHWH','NANDED','10101','01');
+
+1 row created.
+
+SQL>  INSERT INTO WAREHOUSE_MASTER VALUES('WH2','SLWH','BANGLORE','10102','02');
+
+1 row created.
+
+SQL>  INSERT INTO WAREHOUSE_MASTER VALUES('WH3','AKWH','HYDERABAD','10103','03');
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE BATCH_MASTER (
+  2  BATCH_NUMBER         number(5)   ,
+  3  BATCH_ARRIVAL_DATE   date   ,
+  4  MANAGER_ID           number(5)   ,
+  5  WAREHOUSE_ID         varchar2(5)   ,
+  6  CONSTRAINT PK_BATCH_MASTER UNIQUE ( BATCH_NUMBER )
+  7  );
+
+Table created.
+
+SQL>  INSERT INTO BATCH_MASTER VALUES(01,TO_DATE('2022/03/28','yyyy/mm/dd'),10101,'WH1');
+
+1 row created.
+
+SQL>  INSERT INTO BATCH_MASTER VALUES(02,TO_DATE('2022/03/27','yyyy/mm/dd'),10102,'WH2');
+
+1 row created.
+
+SQL>  INSERT INTO BATCH_MASTER VALUES(03,TO_DATE('2022/03/26','yyyy/mm/dd'),10103,'WH3');
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE CURRENT_BACKORDER (
+  2  PART_NUMBER          varchar2(5)   ,
+  3  ORIGNAL_QUNTITY      number(5)   ,
+  4  REMAINING_QUNATITY   number(5)   ,
+  5  BACKORDER_DATE       date   ,
+  6  MANAGER_ID           number(5)   ,
+  7  BACKORDER_ID         number   ,
+  8  WAREHOUSE_ID         varchar2(4)   ,
+  9  CONSTRAINT PK_CURRENT_BACK_0 UNIQUE ( BACKORDER_ID )
+ 10  );
+
+Table created.
+
+SQL> INSERT INTO CURRENT_BACKORDER VALUES('010A',100,45,'1-MAR-22','10101',999,'WH1');
+
+1 row created.
+
+SQL> INSERT INTO CURRENT_BACKORDER VALUES('010B',100,45,'1-MAR-22','10102',888,'WH2');
+
+1 row created.
+
+SQL> INSERT INTO CURRENT_BACKORDER VALUES('010C',100,45,'1-MAR-22','10103',777,'WH3');
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE EMPLOYEE_MASTER (
+  2  FIRSTNAME            varchar2(10)   ,
+  3  MIDDLENAME           varchar2(10)   ,
+  4  LASTNAME             varchar2(20)   ,
+  5  PHONENUMBER          number(9)   NOT NULL,
+  6  SALARY               number(9,3)   ,
+  7  JOB                  varchar2(25)   ,
+  8  MANAGER_ID           number(5)   ,
+  9  WAREHOUSE_ID         varchar2(4)   ,
+ 10  EMPLOYEE_NUMBER      number(5)  DEFAULT 000 ,
+ 11  CONSTRAINT PK_EMPLOYEE_MAS UNIQUE ( EMPLOYEE_NUMBER )
+ 12  );
+
+Table created.
+
+SQL>
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('AVEZ','HUSSAIN','SHUAKAT',040267642,20800,'MANAGER',NULL,'WH1',100);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('LATHEESH','SAI','ERAPALLI',040564732,20800,'MANAGER',NULL,'WH2',101);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('AKSHAY','KALBURGI','AKSHAY',040235532,20800,'MANAGER',NULL,'WH3',102);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Pavan','','Pallam',040224536,15000,'WORKER',10101,'WH1',103);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('William','','Smith',040225636,15000,'WORKER',10101,'WH1',104);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Akbar','','Syed',040225766,15000,'WORKER',10101,'WH1',105);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Jones','','Wright',040228836,15000,'WORKER',10101,'WH1',106);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Nikhil','','Gali',040227536,15000,'WORKER',10101,'WH1',107);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Ravi','Kiran','Soora',040243766,15000,'WORKER',10102,'WH2',108);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Akhil','Singh','Patan',040245836,15000,'WORKER',10102,'WH2',109);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Siva','Madhur','Patel',040237436,15000,'WORKER',10102,'WH2',110);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Prasad','Raju','Konda',040265436,15000,'WORKER',10102,'WH2',111);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Praneeth','Kumar','Gadam',040236536,15000,'WORKER',10103,'WH3',112);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Alamsha','','Sheik',040238946,15000,'WORKER',10103,'WH3',113);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_MASTER VALUES('Saravan','','Jha',040238946,15000,'WORKER',10103,'WH3',114);
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE PART_MASTER (
+  2  PART_NUMBER          varchar2(5)   ,
+  3  SUB_PART_NUMBER      varchar2(4)   ,
+  4  ASSEMBLY_NUMBER      varchar2(4)   ,
+  5  BATCH_NUMBER         number(5)   ,
+  6  CONSTRAINT PK_PART_MASTER UNIQUE ( PART_NUMBER )
+  7  );
+
+Table created.
+
+SQL>   INSERT INTO PART_MASTER VALUES('A1','A1B','ASA1',01);
+
+1 row created.
+
+SQL>  INSERT INTO PART_MASTER VALUES('A2','A2B','ASA2',01);
+
+1 row created.
+
+SQL>  INSERT INTO PART_MASTER VALUES('B1','B1B','ASB1',02);
+
+1 row created.
+
+SQL>  INSERT INTO PART_MASTER VALUES('B2','B2B','ASB2',02);
+
+1 row created.
+
+SQL>  INSERT INTO PART_MASTER VALUES('C1','C1B','ASC1',03);
+
+1 row created.
+
+SQL>  INSERT INTO PART_MASTER VALUES('C2','C2B','ASC2',03);
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE EMPLOYEE_ADDRESS (
+  2  STREET_NUMBER        varchar2(6)   ,
+  3  EMPLOYEE_NUMBER      number(5)   ,
+  4  STREETNAME           varchar2(10)   ,
+  5  CITY                 varchar2(24)   ,
+  6  PROVINCE             varchar2(4)
+  7  );
+
+Table created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431601,100,'NAIABADI','NANDED','MH');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431602,101,'NEHRU ROAD','TIRUPATI','AP');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431603,102,'UDAYNAGAR','HAVERI','KA');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431604,103,'AIROLI','MUMBAI','MH');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431605,104,'YOUSUFGUDA','HYDERABAD','TS');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431606,105,'KATRAJ','PUNE','MH');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431607,106,'MANIYUR','CHITRADURGA','KA');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431608,107,'GANDHI RD','ONGOLE','AP');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431609,108,'LB NAGAR','HYDERABAD','TS');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431610,109,'VASHI','NAVIMUMBAI','MH');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431611,110,'JPNAGAR','BANGALORE','KA');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431612,111,'BENZCIRCLE','VIJAYAWADA','AP');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431612,112,'TNAGAR','CHENNAI','TN');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431612,113,'DARBAL','KOLAR','KA');
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYEE_ADDRESS VALUES(431612,114,'RLNAGAR','NELLORE','AP');
+
+1 row created.
+
+SQL>
+SQL>
+SQL>
+SQL> CREATE TABLE ITEM_MASTER (
+  2  ITEM_NUMBER          varchar2(5)   ,
+  3  PART_NUMBER          varchar2(5)   NOT NULL,
+  4  BATCH_NUMBER         number   ,
+  5  DATE_OUT             date   ,
+  6  CHECK_OUT            date   ,
+  7  BIN_NUMBER           number(5)   ,
+  8  CONSTRAINT PK_ITEM_MASTER UNIQUE ( ITEM_NUMBER )
+  9  );
+
+Table created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010A','A1',01,'31-MAR-22','31-MAR-22',01);
+
+1 row created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010B','A2',01,'31-MAR-22','31-MAR-22',01);
+
+1 row created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010C','B1',02,'31-MAR-22','31-MAR-22',02);
+
+1 row created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010D','B2',02,'31-MAR-22','31-MAR-22',02);
+
+1 row created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010E','C1',03,'31-MAR-22','31-MAR-22',03);
+
+1 row created.
+
+SQL> INSERT INTO ITEM_MASTER VALUES('010F','C2',03,'31-MAR-22','31-MAR-22',03);
+
+1 row created.
+
+`````````````````````````````````````````````````````````````
+
+-BLOCKHECKING
+
+select table_name,blocks
+from user_tables;
+
+````````````````````````
+
+- ANAYLSING TABLES
+
+SQL> analyze table manager_master compute statistics;
+
+Table analyzed.
+
+SQL> analyze table BIN_DETAILS compute statistics;
+
+Table analyzed.
+
+SQL> analyze table BATCH_MASTER compute statistics;
+
+Table analyzed.
+
+SQL> analyze table EMPLOYEE_master compute statistics;
+
+Table analyzed.
+
+SQL> analyze table PART_master compute statistics;
+
+Table analyzed.
+
+SQL> analyze table ITEM_master compute statistics;
+
+Table analyzed.
+
+SQL> analyze table EMPLOYEE_ADDRESS compute statistics;
+
+Table analyzed.
+
+SQL> analyze table WAREHOUSE_MASTER compute statistics;
+
+Table analyzed.
+
+```````````````````````````````````
+
+------ block CHECKING
+
+SQL> select table_name,blocks
+  2  from user_tables;
+
+TABLE_NAME
+                             BLOCKS
+-------------------------------------------------------------------------------------------------------------------------------- ----------
+MANAGER_MASTER
+                                  5
+BIN_DETAILS
+                                  5
+WAREHOUSE_MASTER
+                                  5
+BATCH_MASTER
+                                  5
+CURRENT_BACKORDER
+EMPLOYEE_MASTER
+                                  5
+PART_MASTER
+                                  5
+EMPLOYEE_ADDRESS
+                                  5
+ITEM_MASTER
+                                  5
+
+9 rows selected.
+
+```````````````````````````````
+
+SQL> set autotrace traceonly explain;
+SQL> select * from employee_master;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2908131203
+
+-------------------------------------------------------------------------------------
+| Id  | Operation         | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |                 |    15 |   615 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMPLOYEE_MASTER |    15 |   615 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------
+
+
+````````````
+
+SQL> select * from employee_master where employee_number=101;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3252474659
+
+-----------------------------------------------------------------------------------------------
+| Id  | Operation                   | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-----------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT            |                 |     1 |    41 |     1   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER |     1 |    41 |     1   (0)| 00:00:01 |
+|*  2 |   INDEX UNIQUE SCAN         | PK_EMPLOYEE_MAS |     1 |       |     0   (0)| 00:00:01 |
+-----------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("EMPLOYEE_NUMBER"=101)
+   
+````````````````````````
+SQL> select * from employee_master where firstname='Pavan';
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2908131203
+
+-------------------------------------------------------------------------------------
+| Id  | Operation         | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |                 |     1 |    41 |     3   (0)| 00:00:01 |
+|*  1 |  TABLE ACCESS FULL| EMPLOYEE_MASTER |     1 |    41 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("FIRSTNAME"='Pavan')
+
+```````````````````````````````````
+
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> desc v$sql_plan;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ ADDRESS                                                                                      RAW(8)
+ HASH_VALUE                                                                                   NUMBER
+ SQL_ID                                                                                       VARCHAR2(13)
+ PLAN_HASH_VALUE                                                                              NUMBER
+ FULL_PLAN_HASH_VALUE                                                                         NUMBER
+ CHILD_ADDRESS                                                                                RAW(8)
+ CHILD_NUMBER                                                                                 NUMBER
+ TIMESTAMP                                                                                    DATE
+ OPERATION                                                                                    VARCHAR2(120)
+ OPTIONS                                                                                      VARCHAR2(120)
+ OBJECT_NODE                                                                                  VARCHAR2(160)
+ OBJECT#                                                                                      NUMBER
+ OBJECT_OWNER                                                                                 VARCHAR2(128)
+ OBJECT_NAME                                                                                  VARCHAR2(128)
+ OBJECT_ALIAS                                                                                 VARCHAR2(261)
+ OBJECT_TYPE                                                                                  VARCHAR2(80)
+ OPTIMIZER                                                                                    VARCHAR2(80)
+ ID                                                                                           NUMBER
+ PARENT_ID                                                                                    NUMBER
+ DEPTH                                                                                        NUMBER
+ POSITION                                                                                     NUMBER
+ SEARCH_COLUMNS                                                                               NUMBER
+ COST                                                                                         NUMBER
+ CARDINALITY                                                                                  NUMBER
+ BYTES                                                                                        NUMBER
+ OTHER_TAG                                                                                    VARCHAR2(140)
+ PARTITION_START                                                                              VARCHAR2(256)
+ PARTITION_STOP                                                                               VARCHAR2(256)
+ PARTITION_ID                                                                                 NUMBER
+ OTHER                                                                                        VARCHAR2(4000)
+ DISTRIBUTION                                                                                 VARCHAR2(80)
+ CPU_COST                                                                                     NUMBER
+ IO_COST                                                                                      NUMBER
+ TEMP_SPACE                                                                                   NUMBER
+ ACCESS_PREDICATES                                                                            VARCHAR2(4000)
+ FILTER_PREDICATES                                                                            VARCHAR2(4000)
+ PROJECTION                                                                                   VARCHAR2(4000)
+ TIME                                                                                         NUMBER
+ QBLOCK_NAME                                                                                  VARCHAR2(128)
+ REMARKS                                                                                      VARCHAR2(4000)
+ OTHER_XML                                                                                    CLOB
+ CON_ID                                                                                       NUMBER
+
+SQL> desc v$sql;p
+SP2-0565: Illegal identifier.
+SQL> desc v$sql;
+ Name                                                                                Null?    Type
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ SQL_TEXT                                                                                     VARCHAR2(1000)
+ SQL_FULLTEXT                                                                                 CLOB
+ SQL_ID                                                                                       VARCHAR2(13)
+ SHARABLE_MEM                                                                                 NUMBER
+ PERSISTENT_MEM                                                                               NUMBER
+ RUNTIME_MEM                                                                                  NUMBER
+ SORTS                                                                                        NUMBER
+ LOADED_VERSIONS                                                                              NUMBER
+ OPEN_VERSIONS                                                                                NUMBER
+ USERS_OPENING                                                                                NUMBER
+ FETCHES                                                                                      NUMBER
+ EXECUTIONS                                                                                   NUMBER
+ PX_SERVERS_EXECUTIONS                                                                        NUMBER
+ END_OF_FETCH_COUNT                                                                           NUMBER
+ USERS_EXECUTING                                                                              NUMBER
+ LOADS                                                                                        NUMBER
+ FIRST_LOAD_TIME                                                                              VARCHAR2(76)
+ INVALIDATIONS                                                                                NUMBER
+ PARSE_CALLS                                                                                  NUMBER
+ DISK_READS                                                                                   NUMBER
+ DIRECT_WRITES                                                                                NUMBER
+ DIRECT_READS                                                                                 NUMBER
+ BUFFER_GETS                                                                                  NUMBER
+ APPLICATION_WAIT_TIME                                                                        NUMBER
+ CONCURRENCY_WAIT_TIME                                                                        NUMBER
+ CLUSTER_WAIT_TIME                                                                            NUMBER
+ USER_IO_WAIT_TIME                                                                            NUMBER
+ PLSQL_EXEC_TIME                                                                              NUMBER
+ JAVA_EXEC_TIME                                                                               NUMBER
+ ROWS_PROCESSED                                                                               NUMBER
+ COMMAND_TYPE                                                                                 NUMBER
+ OPTIMIZER_MODE                                                                               VARCHAR2(10)
+ OPTIMIZER_COST                                                                               NUMBER
+ OPTIMIZER_ENV                                                                                RAW(2000) OPTIMIZER_ENV_HASH_VALUE                                                                     NUMBER
+ PARSING_USER_ID                                                                              NUMBER
+ PARSING_SCHEMA_ID                                                                            NUMBER
+ PARSING_SCHEMA_NAME                                                                          VARCHAR2(128)
+ KEPT_VERSIONS                                                                                NUMBER
+ ADDRESS                                                                                      RAW(8)
+ TYPE_CHK_HEAP                                                                                RAW(8)
+ HASH_VALUE                                                                                   NUMBER
+ OLD_HASH_VALUE                                                                               NUMBER
+ PLAN_HASH_VALUE                                                                              NUMBER
+ FULL_PLAN_HASH_VALUE                                                                         NUMBER
+ CHILD_NUMBER                                                                                 NUMBER
+ SERVICE                                                                                      VARCHAR2(64)
+ SERVICE_HASH                                                                                 NUMBER
+ MODULE                                                                                       VARCHAR2(64)
+ MODULE_HASH                                                                                  NUMBER
+ ACTION                                                                                       VARCHAR2(64)
+ ACTION_HASH                                                                                  NUMBER
+ SERIALIZABLE_ABORTS                                                                          NUMBER
+ OUTLINE_CATEGORY                                                                             VARCHAR2(64)
+ CPU_TIME                                                                                     NUMBER
+ ELAPSED_TIME                                                                                 NUMBER
+ OUTLINE_SID                                                                                  NUMBER
+ CHILD_ADDRESS                                                                                RAW(8)
+ SQLTYPE                                                                                      NUMBER
+ REMOTE                                                                                       VARCHAR2(1)
+ OBJECT_STATUS                                                                                VARCHAR2(19)
+ LITERAL_HASH_VALUE                                                                           NUMBER
+ LAST_LOAD_TIME                                                                               VARCHAR2(76)
+ IS_OBSOLETE                                                                                  VARCHAR2(1)
+ IS_BIND_SENSITIVE                                                                            VARCHAR2(1)
+ IS_BIND_AWARE                                                                                VARCHAR2(1)
+ IS_SHAREABLE                                                                                 VARCHAR2(1)
+ CHILD_LATCH                                                                                  NUMBER
+ SQL_PROFILE                                                                                  VARCHAR2(64)
+ SQL_PATCH                                                                                    VARCHAR2(128)
+ SQL_PLAN_BASELINE                                                                            VARCHAR2(128)
+ PROGRAM_ID                                                                                   NUMBER
+ PROGRAM_LINE#                                                                                NUMBER
+ EXACT_MATCHING_SIGNATURE                                                                     NUMBER
+ FORCE_MATCHING_SIGNATURE                                                                     NUMBER
+ LAST_ACTIVE_TIME                                                                             DATE
+ BIND_DATA                                                                                    RAW(2000) TYPECHECK_MEM                                                                                NUMBER
+ IO_CELL_OFFLOAD_ELIGIBLE_BYTES                                                               NUMBER
+ IO_INTERCONNECT_BYTES                                                                        NUMBER
+ PHYSICAL_READ_REQUESTS                                                                       NUMBER
+ PHYSICAL_READ_BYTES                                                                          NUMBER
+ PHYSICAL_WRITE_REQUESTS                                                                      NUMBER
+ PHYSICAL_WRITE_BYTES                                                                         NUMBER
+ OPTIMIZED_PHY_READ_REQUESTS                                                                  NUMBER
+ LOCKED_TOTAL                                                                                 NUMBER
+ PINNED_TOTAL                                                                                 NUMBER
+ IO_CELL_UNCOMPRESSED_BYTES                                                                   NUMBER
+ IO_CELL_OFFLOAD_RETURNED_BYTES                                                               NUMBER
+ CON_ID                                                                                       NUMBER
+ IS_REOPTIMIZABLE                                                                             VARCHAR2(1)
+ IS_RESOLVED_ADAPTIVE_PLAN                                                                    VARCHAR2(1)
+ IM_SCANS                                                                                     NUMBER
+ IM_SCAN_BYTES_UNCOMPRESSED                                                                   NUMBER
+ IM_SCAN_BYTES_INMEMORY                                                                       NUMBER
+ DDL_NO_INVALIDATE                                                                            VARCHAR2(1)
+ IS_ROLLING_INVALID                                                                           VARCHAR2(1)
+ IS_ROLLING_REFRESH_INVALID                                                                   VARCHAR2(1)
+ RESULT_CACHE                                                                                 VARCHAR2(1)
+ SQL_QUARANTINE                                                                               VARCHAR2(128)
+ AVOIDED_EXECUTIONS                                                                           NUMBER
+ 
+ ````````````````````````
+ 
+ SQL> select hash_value
+  2  from v$sql_plan
+  3  where object_name like '%EMP%';
+
+HASH_VALUE
+----------
+3816425451
+2515931679
+4249364050
+4195232646
+4195232646
+2176858430
+2391161490
+2587248860
+3952893163
+3155720065
+1197504950
+1197504950
+2729605649
+4232610303
+2308742632
+ 180658120
+3382094085
+1308798701
+2008592416
+ 768786310
+2685719135
+3232167117
+3731294852
+2296848477
+2296848477
+2105615391
+2105615391
+2105615391
+1916349325
+1916349325
+2759012201
+4003674198
+2743424355
+1406490149
+3480574614
+1962106690
+ 830432704
+  25653362
+ 106788748
+3103623829
+ 655724130
+2259526998
+1547283088
+3773806176
+1295897244
+1295897244
+2139214563
+3174684249
+3174684249
+2010511729
+
+50 rows selected.
+
+`````````````````
+
+SQL> select hash_value
+  2  from v$sql_plan
+  3  where plan_hash_value = 2908131203;
+
+HASH_VALUE
+----------
+4249364050
+4249364050
+2729605649
+2729605649
+2308742632
+2308742632
+  25653362
+  25653362
+
+8 rows selected.
+
+````````````````
+
+SQL> select hash_value,sql_id
+  2  from v$sql_plan
+  3  where plan_hash_value = 2908131203;
+
+HASH_VALUE SQL_ID
+---------- -------------
+4249364050 dh1gphbynh9kk
+4249364050 dh1gphbynh9kk
+2729605649 0p7dzckjb4yhj
+2729605649 0p7dzckjb4yhj
+2308742632 buky5c24tt7g8
+2308742632 buky5c24tt7g8
+  25653362 fhj0mzs0sfw3k
+  25653362 fhj0mzs0sfw3k
+
+8 rows selected.
+
+``````````````
+SQL> select sql_text,sql_id
+  2  from v$sql
+  3  where sql_id = 'dh1gphbynh9kk';
+
+SQL_TEXT
+------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID
+-------------
+SELECT * FROM EMPLOYEE_MASTER
+dh1gphbynh9kk
+
+`````````````````````
+
+FIRSTNAME  MIDDLENAME LASTNAME             PHONENUMBER     SALARY JOB                       MANAGER_ID WARE EMPLOYEE_NUMBER
+---------- ---------- -------------------- ----------- ---------- ------------------------- ---------- ---- ---------------
+Pavan                 Pallam                  40224536      15000 WORKER                         10101 WH1             103
+
+SQL> analyze table ware.employee_master compute statistics;
+
+Table analyzed.
+
+SQL> conn ware/ware
+Connected.
+SQL> SELECT * FROM EMPLOYEE_MASTER WHERE FIRSTNAME = 'PAVAN';
+
+no rows selected
+
+SQL>
+SQL> SELECT * FROM EMPLOYEE_MASTER WHERE FIRSTNAME = 'Pavan';
+
+FIRSTNAME  MIDDLENAME LASTNAME             PHONENUMBER     SALARY JOB                       MANAGER_ID WARE EMPLOYEE_NUMBER
+---------- ---------- -------------------- ----------- ---------- ------------------------- ---------- ---- ---------------
+Pavan                 Pallam                  40224536      15000 WORKER                         10101 WH1             103
+
+`````````````
+
+SQL> explain plan for select * from employee_master;
+
+Explained.
+
+``````````````````
+
+SQL> select plan_id from plan_table;
+
+   PLAN_ID
+----------
+        55
+        55
+		
+		
+SQL> SET autotrace traceonly explain;
+SQL> select plan_id from plan_table;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 103984305
+
+---------------------------------------------------------------------------------
+| Id  | Operation         | Name        | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |             |     2 |    26 |     2   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| PLAN_TABLE$ |     2 |    26 |     2   (0)| 00:00:01 |
+---------------------------------------------------------------------------------
+
+Note
+-----
+   - dynamic statistics used: dynamic sampling (level=2)
+   
+``````````````````````````````
+ 
+SQL> explain plan set statement_id='demo1' for select * from employee_master;
+
+Explained.
+
+``````````````````````````````
+
+
+SQL> select cpu_cost from plan_table where statement_id='demo1';
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 103984305
+
+---------------------------------------------------------------------------------
+| Id  | Operation         | Name        | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |             |     4 |   120 |     2   (0)| 00:00:01 |
+|*  1 |  TABLE ACCESS FULL| PLAN_TABLE$ |     4 |   120 |     2   (0)| 00:00:01 |
+---------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("STATEMENT_ID"='demo1')
+
+Note
+-----
+
+SQL> set linesize 130
+SQL> set pagesize 0
+SQL> select * from table(DBMS_XPLAN.DISPLAY());
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2137789089
+
+---------------------------------------------------------------------------------------------
+| Id  | Operation                         | Name    | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                  |         |  8168 | 16336 |    29   (0)| 00:00:01 |
+|   1 |  COLLECTION ITERATOR PICKLER FETCH| DISPLAY |  8168 | 16336 |    29   (0)| 00:00:01 |
+---------------------------------------------------------------------------------------------
+
+
+``````````````````````
+
+SQL> select * from ware.employee_master;
+AVEZ       HUSSAIN    SHUAKAT                 40267642      20800 MANAGER                              WH1             100
+LATHEESH   SAI        ERAPALLI                40564732      20800 MANAGER                              WH2             101
+AKSHAY     KALBURGI   AKSHAY                  40235532      20800 MANAGER                              WH3             102
+Pavan                 Pallam                  40224536      15000 WORKER                         10101 WH1             103
+William               Smith                   40225636      15000 WORKER                         10101 WH1             104
+Akbar                 Syed                    40225766      15000 WORKER                         10101 WH1             105
+Jones                 Wright                  40228836      15000 WORKER                         10101 WH1             106
+Nikhil                Gali                    40227536      15000 WORKER                         10101 WH1             107
+Ravi       Kiran      Soora                   40243766      15000 WORKER                         10102 WH2             108
+Akhil      Singh      Patan                   40245836      15000 WORKER                         10102 WH2             109
+Siva       Madhur     Patel                   40237436      15000 WORKER                         10102 WH2             110
+Prasad     Raju       Konda                   40265436      15000 WORKER                         10102 WH2             111
+Praneeth   Kumar      Gadam                   40236536      15000 WORKER                         10103 WH3             112
+Alamsha               Sheik                   40238946      15000 WORKER                         10103 WH3             113
+Saravan               Jha                     40238946      15000 WORKER                         10103 WH3             114
+
+15 rows selected.
+
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2908131203
+
+-------------------------------------------------------------------------------------
+| Id  | Operation         | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |                 |    15 |   615 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMPLOYEE_MASTER |    15 |   615 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------
+
+
+Statistics
+----------------------------------------------------------
+          0  recursive calls
+          0  db block gets
+          7  consistent gets
+          0  physical reads
+          0  redo size
+       2001  bytes sent via SQL*Net to client
+        396  bytes received via SQL*Net from client
+          2  SQL*Net roundtrips to/from client
+          0  sorts (memory)
+          0  sorts (disk)
+         15  rows processed
+		 
+``````````````````````
+
+SQL> set autotrace traceonly statistics;
+SQL> select * from ware.employee_master;
+
+15 rows selected.
+
+
+Statistics
+----------------------------------------------------------
+          0  recursive calls
+          0  db block gets
+          7  consistent gets
+          0  physical reads
+          0  redo size
+       2001  bytes sent via SQL*Net to client
+        396  bytes received via SQL*Net from client
+          2  SQL*Net roundtrips to/from client
+          0  sorts (memory)
+          0  sorts (disk)
+         15  rows processed
+		 
+		 
+````````````````~~~~~~~~~~~~
+
+SQL> set autotrace traceonly explain;
+SQL> select * from ware.employee_master;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2908131203
+
+-------------------------------------------------------------------------------------
+| Id  | Operation         | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT  |                 |    15 |   690 |     3   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS FULL| EMPLOYEE_MASTER |    15 |   690 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------
+
+
+````````````````~~~~~~~~~~~~
+
+SQL> desc v$sql_plan_statistics;
+ Name                                                                    Null?    Type
+ ----------------------------------------------------------------------- -------- ------------------------------------------------
+ ADDRESS                                                                          RAW(8)
+ HASH_VALUE                                                                       NUMBER
+ SQL_ID                                                                           VARCHAR2(13)
+ PLAN_HASH_VALUE                                                                  NUMBER
+ FULL_PLAN_HASH_VALUE                                                             NUMBER
+ CHILD_ADDRESS                                                                    RAW(8)
+ CHILD_NUMBER                                                                     NUMBER
+ OPERATION_ID                                                                     NUMBER
+ EXECUTIONS                                                                       NUMBER
+ LAST_STARTS                                                                      NUMBER
+ STARTS                                                                           NUMBER
+ LAST_OUTPUT_ROWS                                                                 NUMBER
+ OUTPUT_ROWS                                                                      NUMBER
+ LAST_CR_BUFFER_GETS                                                              NUMBER
+ CR_BUFFER_GETS                                                                   NUMBER
+ LAST_CU_BUFFER_GETS                                                              NUMBER
+ CU_BUFFER_GETS                                                                   NUMBER
+ LAST_DISK_READS                                                                  NUMBER
+ DISK_READS                                                                       NUMBER
+ LAST_DISK_WRITES                                                                 NUMBER
+ DISK_WRITES                                                                      NUMBER
+ LAST_ELAPSED_TIME                                                                NUMBER
+ ELAPSED_TIME                                                                     NUMBER
+ CON_ID                                                                           NUMBER
+
+SQL> select last_disk_reads
+  2  from v$sql_plan_statistics
+  3  where plan_hash_value=2908131203;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1929445202
+
+--------------------------------------------------------------------
+| Id  | Operation        | Name       | Rows  | Bytes | Cost (%CPU)|
+--------------------------------------------------------------------
+|   0 | SELECT STATEMENT |            |     1 |    39 |     0   (0)|
+|*  1 |  FIXED TABLE FULL| X$QESRSTAT |     1 |    39 |            |
+--------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   1 - filter("PLHASH_QESRS"=2908131203 AND
+              "INST_ID"=USERENV('INSTANCE'))
+			  
+```````````````~~~~~~~~~~~~~~~
+SQL> show parameter statistics_level
+SQL> show user
+USER is "SYS"
+SQL> alter system set statistics_level=all;
+
+System altered.
+
+
+SQL> alter system set statistics_level=typical;
+
+System altered.
+
+``````````````
+
+SQL> select *
+  2  from ware.employee_master
+  3  where employee_number=101;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3252474659
+
+-----------------------------------------------------------------------------------------------
+| Id  | Operation                   | Name            | Rows  | Bytes | Cost (%CPU)| Time     |
+-----------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT            |                 |     1 |    46 |     1   (0)| 00:00:01 |
+|   1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER |     1 |    46 |     1   (0)| 00:00:01 |
+|*  2 |   INDEX UNIQUE SCAN         | PK_EMPLOYEE_MAS |     1 |       |     0   (0)| 00:00:01 |
+-----------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("EMPLOYEE_NUMBER"=101)
+   
+   
+ ````````````````````
+ 
+ SQL> select /*+ RULE */ *
+  2  from ware.employee_master
+  3  where employee_number=101;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3252474659
+
+-------------------------------------------------------
+| Id  | Operation                   | Name            |
+-------------------------------------------------------
+|   0 | SELECT STATEMENT            |                 |
+|   1 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER |
+|*  2 |   INDEX UNIQUE SCAN         | PK_EMPLOYEE_MAS |
+-------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("EMPLOYEE_NUMBER"=101)
+
+Note
+-----
+   - rule based optimizer used (consider using cbo)
+   
+ `````````````````````````
+ 
+ SQL> select firstname,province
+  2  from employee_master,employee_address
+  3  where employee_master.employee_number = employee_address.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 963806275
+
+-------------------------------------------------------------------------------------------------
+| Id  | Operation                    | Name             | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT             |                  |    15 |   240 |     6  (17)| 00:00:01 |
+|   1 |  MERGE JOIN                  |                  |    15 |   240 |     6  (17)| 00:00:01 |
+|   2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER  |    15 |   165 |     2   (0)| 00:00:01 |
+|   3 |    INDEX FULL SCAN           | PK_EMPLOYEE_MAS  |    15 |       |     1   (0)| 00:00:01 |
+|*  4 |   SORT JOIN                  |                  |    15 |    75 |     4  (25)| 00:00:01 |
+|   5 |    TABLE ACCESS FULL         | EMPLOYEE_ADDRESS |    15 |    75 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   4 - access("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"="EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER")
+       filter("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"="EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER")
+	   
+`````````````````~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+SQL> select /*+ USE_NL(employee_master) USE_NL(employee_address)*/ firstname,province
+  2  from employee_master,employee_address
+  3  where employee_master.employee_number = employee_address.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 2616107017
+
+-------------------------------------------------------------------------------------------------
+| Id  | Operation                    | Name             | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT             |                  |    15 |   240 |    18   (0)| 00:00:01 |
+|   1 |  NESTED LOOPS                |                  |    15 |   240 |    18   (0)| 00:00:01 |
+|   2 |   NESTED LOOPS               |                  |    15 |   240 |    18   (0)| 00:00:01 |
+|   3 |    TABLE ACCESS FULL         | EMPLOYEE_ADDRESS |    15 |    75 |     3   (0)| 00:00:01 |
+|*  4 |    INDEX UNIQUE SCAN         | PK_EMPLOYEE_MAS  |     1 |       |     0   (0)| 00:00:01 |
+|   5 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER  |     1 |    11 |     1   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   4 - access("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"="EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER")
+
+Hint Report (identified by operation id / Query Block Name / Object Alias):
+Total hints for statement: 1 (U - Unused (1))
+---------------------------------------------------------------------------
+
+   3 -  SEL$1 / EMPLOYEE_ADDRESS@SEL$1
+         U -  USE_NL(employee_address)
+		 
+`````````~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SQL> select /*+ USE_NL(d) USE_NL(e)*/ firstname,province
+  2  from employee_master,employee_address
+  3  where employee_master.employee_number = employee_address.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 963806275
+
+-------------------------------------------------------------------------------------------------
+| Id  | Operation                    | Name             | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT             |                  |    15 |   240 |     6  (17)| 00:00:01 |
+|   1 |  MERGE JOIN                  |                  |    15 |   240 |     6  (17)| 00:00:01 |
+|   2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER  |    15 |   165 |     2   (0)| 00:00:01 |
+|   3 |    INDEX FULL SCAN           | PK_EMPLOYEE_MAS  |    15 |       |     1   (0)| 00:00:01 |
+|*  4 |   SORT JOIN                  |                  |    15 |    75 |     4  (25)| 00:00:01 |
+|   5 |    TABLE ACCESS FULL         | EMPLOYEE_ADDRESS |    15 |    75 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   4 - access("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"="EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER")
+       filter("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"="EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER")
+
+Hint Report (identified by operation id / Query Block Name / Object Alias):
+Total hints for statement: 2 (N - Unresolved (2))
+---------------------------------------------------------------------------
+
+   1 -  SEL$1
+         N -  USE_NL(d)
+         N -  USE_NL(e)
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+SQL> select /*+ USE_NL(employee_master) USE_NL(employee_address)*/ firstname,province
+  2  from employee_master,employee_address
+  3  where employee_master.employee_number = employee_address.employee_number and employee_address.employee_number=101;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 223883847
+
+-------------------------------------------------------------------------------------------------
+| Id  | Operation                    | Name             | Rows  | Bytes | Cost (%CPU)| Time     |
+-------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT             |                  |     1 |    16 |     4   (0)| 00:00:01 |
+|   1 |  NESTED LOOPS                |                  |     1 |    16 |     4   (0)| 00:00:01 |
+|   2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER  |     1 |    11 |     1   (0)| 00:00:01 |
+|*  3 |    INDEX UNIQUE SCAN         | PK_EMPLOYEE_MAS  |     1 |       |     0   (0)| 00:00:01 |
+|*  4 |   TABLE ACCESS FULL          | EMPLOYEE_ADDRESS |     1 |     5 |     3   (0)| 00:00:01 |
+-------------------------------------------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   3 - access("EMPLOYEE_MASTER"."EMPLOYEE_NUMBER"=101)
+   4 - filter("EMPLOYEE_ADDRESS"."EMPLOYEE_NUMBER"=101)
+
+Hint Report (identified by operation id / Query Block Name / Object Alias):
+Total hints for statement: 1 (U - Unused (1))
+---------------------------------------------------------------------------
+
+   2 -  SEL$1 / EMPLOYEE_MASTER@SEL$1
+         U -  USE_NL(employee_master)
+		 
+``````````````````~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+
+SQL> @C:\Users\LERAPALL\Downloads\WINDOWS.X64_193000_db_home\rdbms\admin\awrddrpt.sql
+Specify the Report Type
+~~~~~~~~~~~~~~~~~~~~~~~
+Would you like an HTML report, or a plain text report?
+Enter 'html' for an HTML report, or 'text' for plain text
+Defaults to 'html'
+Enter value for report_type: text
+old   1: select 'Type Specified: ',lower(nvl('&&report_type','html')) report_type from dual
+new   1: select 'Type Specified: ',lower(nvl('text','html')) report_type from dual
+Type Specified:  text
+
+old   1: select '&&report_type' report_type_def from dual
+new   1: select 'text' report_type_def from dual
+
+
+old   1: select '&&view_loc' view_loc_def from dual
+new   1: select 'AWR_PDB' view_loc_def from dual
+
+
+
+Current Instance
+~~~~~~~~~~~~~~~~
+old   1: select (case when '&view_loc' = 'AWR_PDB'
+new   1: select (case when 'AWR_PDB' = 'AWR_PDB'
+
+
+old   1: select &default_dbid     dbid
+new   1: select 2612781541     dbid
+old   2:      , &default_dbid     dbid2
+new   2:      , 2612781541     dbid2
+ 2612781541  2612781541 ORCLCAPA            1        1 orclcapapr
+
+
+
+
+Instances in this Workload Repository schema
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  DB Id      Inst Num   DB Name      Instance     Host
+------------ ---------- ---------    ----------   ------
+* 2612781541     1      ORCLCAPA     orclcapapr   LIN24010785
+
+Database Id and Instance Number for the First Pair of Snapshots
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using 2612781541 for Database Id for the first pair of snapshots
+Using          1 for Instance Number for the first pair of snapshots
+
+
+Specify the number of days of snapshots to choose from
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Entering the number of days (n) will result in the most recent
+(n) days of snapshots being listed.  Pressing <return> without
+specifying a number lists all completed snapshots.
+
+
+Enter value for num_days: 1
+
+Listing the last day's Completed Snapshots
+Instance     DB Name      Snap Id       Snap Started    Snap Level
+------------ ------------ ---------- ------------------ ----------
+
+orclcapapr   ORCLCAPA            51  17 Apr 2022 01:25    1
+                                 52  17 Apr 2022 12:39    1
+                                 53  17 Apr 2022 13:30    1
+
+
+Specify the First Pair of Begin and End Snapshot Ids
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enter value for begin_snap: 51
+First Begin Snapshot Id specified: 51
+
+Enter value for end_snap: 52
+First End   Snapshot Id specified: 52
+
+
+
+Instances in this Workload Repository schema
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  DB Id      Inst Num   DB Name      Instance     Host
+------------ ---------- ---------    ----------   ------
+* 2612781541     1      ORCLCAPA     orclcapapr   LIN24010785
+
+
+
+
+Database Id and Instance Number for the Second Pair of Snapshots
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using 2612781541 for Database Id for the second pair of snapshots
+Using          1 for Instance Number for the second pair of snapshots
+
+
+Specify the number of days of snapshots to choose from
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Entering the number of days (n) will result in the most recent
+(n) days of snapshots being listed.  Pressing <return> without
+specifying a number lists all completed snapshots.
+
+
+Enter value for num_days2: 2
+
+Listing the last 2 days of Completed Snapshots
+                                 37  16 Apr 2022 08:56    1
+                                 38  16 Apr 2022 09:30    1
+                                 39  16 Apr 2022 10:30    1
+                                 40  16 Apr 2022 11:30    1
+                                 41  16 Apr 2022 12:30    1
+                                 42  16 Apr 2022 13:30    1
+                                 43  16 Apr 2022 14:30    1
+                                 44  16 Apr 2022 15:30    1
+                                 45  16 Apr 2022 16:30    1
+                                 46  16 Apr 2022 17:30    1
+                                 47  16 Apr 2022 18:30    1
+                                 48  16 Apr 2022 19:30    1
+                                 49  16 Apr 2022 20:30    1
+                                 50  16 Apr 2022 21:30    1
+                                 51  17 Apr 2022 01:25    1
+                                 52  17 Apr 2022 12:39    1
+                                 53  17 Apr 2022 13:30    1
+
+
+Specify the Second Pair of Begin and End Snapshot Ids
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enter value for begin_snap2: 47
+Second Begin Snapshot Id specified: 47
+
+Enter value for end_snap2: 49
+Second End   Snapshot Id specified: 49
+
+
+
+Specify the Report Name
+~~~~~~~~~~~~~~~~~~~~~~~
+The default report file name is awrdiff_1_51_1_47.txt  To use this name,
+press <return> to continue, otherwise enter an alternative.
+
+Enter value for report_name:
+
+Using the report name awrdiff_1_51_1_47.txt
+
+
+```````````````~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SQL> ^C
+C:\Users\LERAPALL>tkprof C:\Users\LERAPALL\Downloads\diag\rdbms\orclcapapr\orclcapapr\trace\orclcapapr_j000_3308.trc wareproject.trc
+
+TKPROF: Release 19.0.0.0.0 - Development on Sun Apr 17 15:10:49 2022
+
+Copyright (c) 1982, 2019, Oracle and/or its affiliates.  All rights reserved.
+
+
+
+C:\Users\LERAPALL>set oracle_sid=orclcapapr
+
+C:\Users\LERAPALL>sqlplus /nolog
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sun Apr 17 15:35:23 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+SQL> conn ware/ware
+Connected.
+SQL> create index empmidx on employee_master(firstname,salary);
+
+Index created.
+
+SQL> analyze table employee_master compute statistics;
+
+Table analyzed.
+
+SQL> set autotrace traceonly explain;
+SQL> select employee_number,salary
+  2  from employee_master
+  3  where salary > 15000;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1010556188
+
+--------------------------------------------------------------------------------
+-----------------------
+
+| Id  | Operation                           | Name            | Rows  | Bytes |
+Cost (%CPU)| Time     |
+
+--------------------------------------------------------------------------------
+-----------------------
+
+|   0 | SELECT STATEMENT                    |                 |     8 |    48 |
+    2   (0)| 00:00:01 |
+
+|   1 |  TABLE ACCESS BY INDEX ROWID BATCHED| EMPLOYEE_MASTER |     8 |    48 |
+    2   (0)| 00:00:01 |
+
+|*  2 |   INDEX SKIP SCAN                   | EMPMIDX         |     8 |       |
+    1   (0)| 00:00:01 |
+
+--------------------------------------------------------------------------------
+-----------------------
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("SALARY">15000)
+       filter("SALARY">15000)
+	   
+	   
+``````````````````````````````~~~~~~~~~~~~~~~
+
+
+SQL> select *
+  2  from employee_master
+  3  where employee_number < 106;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1299592276
+
+--------------------------------------------------------------------------------
+-----------------------
+
+| Id  | Operation                           | Name            | Rows  | Bytes |
+Cost (%CPU)| Time     |
+
+--------------------------------------------------------------------------------
+-----------------------
+
+|   0 | SELECT STATEMENT                    |                 |     6 |   246 |
+    2   (0)| 00:00:01 |
+
+|   1 |  TABLE ACCESS BY INDEX ROWID BATCHED| EMPLOYEE_MASTER |     6 |   246 |
+    2   (0)| 00:00:01 |
+
+|*  2 |   INDEX RANGE SCAN                  | PK_EMPLOYEE_MAS |     6 |       |
+    1   (0)| 00:00:01 |
+
+--------------------------------------------------------------------------------
+-----------------------
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   2 - access("EMPLOYEE_NUMBER"<106)
+ 
+```````~~~~~~~~~~~~~~~~~
+
+select /*+ index_join(ea) */ em.firstname,ea.province
+from employee_address ea,employee_master em
+where ea.employee_number=em.employee_number;
+
+SQL> select /*+ index_join(ea) */ em.firstname,ea.province
+  2  from employee_address ea,employee_master em
+  3  where ea.employee_number=em.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 963806275
+
+--------------------------------------------------------------------------------
+-----------------
+
+| Id  | Operation                    | Name             | Rows  | Bytes | Cost (
+%CPU)| Time     |
+
+--------------------------------------------------------------------------------
+-----------------
+
+|   0 | SELECT STATEMENT             |                  |    15 |   210 |     6
+ (17)| 00:00:01 |
+
+|   1 |  MERGE JOIN                  |                  |    15 |   210 |     6
+ (17)| 00:00:01 |
+
+|   2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEE_MASTER  |    15 |   135 |     2
+  (0)| 00:00:01 |
+
+|   3 |    INDEX FULL SCAN           | PK_EMPLOYEE_MAS  |    15 |       |     1
+  (0)| 00:00:01 |
+
+|*  4 |   SORT JOIN                  |                  |    15 |    75 |     4
+ (25)| 00:00:01 |
+
+|   5 |    TABLE ACCESS FULL         | EMPLOYEE_ADDRESS |    15 |    75 |     3
+  (0)| 00:00:01 |
+
+--------------------------------------------------------------------------------
+-----------------
+
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   4 - access("EA"."EMPLOYEE_NUMBER"="EM"."EMPLOYEE_NUMBER")
+       filter("EA"."EMPLOYEE_NUMBER"="EM"."EMPLOYEE_NUMBER")
+
+Hint Report (identified by operation id / Query Block Name / Object Alias):
+Total hints for statement: 1 (U - Unused (1))
+---------------------------------------------------------------------------
+
+   5 -  SEL$1 / EA@SEL$1
+         U -  index_join(ea)
+		 
+`````````````~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> grant create materialized view to ware;
+
+Grant succeeded.
+
+```````````````~~~~~~~~~~~~~~~~~~~~
+
+SQL> conn ware/ware
+Connected.
+SQL> create materialized view prjtview
+  2  enable query rewrite as select em.firstname,em.salary,ea.province
+  3  from employee_master em,employee_address ea
+  4  where em.employee_number=ea.employee_number;
+
+Materialized view created.
+
+SQL> analyze table employee_master compute statistics;
+
+Table analyzed.
+
+SQL> analyze table employee_address compute statistics;
+
+Table analyzed.
+
+SQL> set autotrace traceonly explain
+SQL> select em.firstname,em.salary,ea.province
+  2  from employee_master em,employee_address ea
+  3  where em.employee_number=ea.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1328267567
+
+--------------------------------------------------------------------------------
+---------
+
+| Id  | Operation                    | Name     | Rows  | Bytes | Cost (%CPU)| T
+ime     |
+
+--------------------------------------------------------------------------------
+---------
+
+|   0 | SELECT STATEMENT             |          |    15 |   210 |     3   (0)| 0
+0:00:01 |
+
+|   1 |  MAT_VIEW REWRITE ACCESS FULL| PRJTVIEW |    15 |   210 |     3   (0)| 0
+0:00:01 |
+
+--------------------------------------------------------------------------------
+---------
+
+SQL> set autotrace traceonly explain
+SQL> select em.firstname,em.salary,ea.province
+  2  from employee_master em,employee_address ea
+  3  where em.employee_number=ea.employee_number;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 1328267567
+
+--------------------------------------------------------------------------------
+---------
+
+| Id  | Operation                    | Name     | Rows  | Bytes | Cost (%CPU)| T
+ime     |
+
+--------------------------------------------------------------------------------
+---------
+
+|   0 | SELECT STATEMENT             |          |    15 |   210 |     3   (0)| 0
+0:00:01 |
+
+|   1 |  MAT_VIEW REWRITE ACCESS FULL| PRJTVIEW |    15 |   210 |     3   (0)| 0
+0:00:01 |
+
+--------------------------------------------------------------------------------
+---------
+
+
+SQL> select * FROM prjtview;
+
+Execution Plan
+----------------------------------------------------------
+Plan hash value: 3665697130
+
+--------------------------------------------------------------------------------
+-
+
+| Id  | Operation            | Name     | Rows  | Bytes | Cost (%CPU)| Time
+|
+
+--------------------------------------------------------------------------------
+-
+
+|   0 | SELECT STATEMENT     |          |    15 |   210 |     3   (0)| 00:00:01
+|
+
+|   1 |  MAT_VIEW ACCESS FULL| PRJTVIEW |    15 |   210 |     3   (0)| 00:00:01
+|
+
+--------------------------------------------------------------------------------
+-
+
+````````````````~~~~~~~~~~~~~~~~~~~~
+
+SQL> set autotrace off;
+SQL> select * from prjtview;
+
+FIRSTNAME      SALARY PROV
+---------- ---------- ----
+AVEZ            20800 MH
+LATHEESH        20800 AP
+AKSHAY          20800 KA
+Pavan           15000 MH
+William         15000 TS
+Akbar           15000 MH
+Jones           15000 KA
+Nikhil          15000 AP
+Ravi            15000 TS
+Akhil           15000 MH
+Siva            15000 KA
+
+FIRSTNAME      SALARY PROV
+---------- ---------- ----
+Prasad          15000 AP
+Praneeth        15000 TN
+Alamsha         15000 KA
+Saravan         15000 AP
+
+````````````~~~~~~~~~~~~~~~~~
+
